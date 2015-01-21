@@ -7,10 +7,10 @@ Ext.define('casco.Application', {
     extend: 'Ext.app.Application',
     
     name: 'casco',
-    requires: ['casco.view.main.Main', 'casco.view.auth.Login'],
+    requires: ['casco.view.main.Main', 'casco.view.auth.Login', 'casco.store.TreeDocuments'],
 
     stores: [
-             'Projects'
+             'Projects','TreeDocuments'
     ],
     
     launch: function () {
@@ -23,6 +23,6 @@ Ext.define('casco.Application', {
 		}
 		uid = localStorage.getItem("uid");
 		
-		Ext.widget(uid ? 'app-main' : 'login');
+		Ext.widget(uid ? 'app-main' :'login');
     }
 });

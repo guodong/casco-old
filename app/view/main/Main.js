@@ -35,6 +35,7 @@ Ext.define('casco.view.main.Main', {
 	    },{
 	        xtype: 'tree',
 	        id: 'mtree',
+	        itemId: 'mtree',
 	        title: localStorage.project_name,
 	        region: 'west',
 	        width: 200,

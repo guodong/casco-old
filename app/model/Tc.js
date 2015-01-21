@@ -19,5 +19,4 @@ Ext.define('casco.model.Tc', {
 		name : 'precondition',
 		type : 'string'
 	}],
-	manyToMany : 'Tc',
 });

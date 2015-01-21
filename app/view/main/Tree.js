@@ -1,7 +1,7 @@
 Ext.define('casco.view.main.Tree', {
     extend: 'Ext.tree.Panel',
     alias: 'widget.tree',
-    requires: ['casco.ux.Registry', 'casco.store.TreeDocuments', 'casco.view.document.Create', 'casco.view.document.FolderCreate'],
+    requires: ['casco.ux.Registry', 'casco.view.document.Create', 'casco.view.document.FolderCreate'],
 
     listeners: {
         itemclick: 'seldoc',
@@ -9,15 +9,37 @@ Ext.define('casco.view.main.Tree', {
     displayField: 'name',
 
     rootVisible : false,
-
-    initComponent: function() {
-    	var self = this;
-    	var project_id = localStorage.project_id;//casco.ux.Registry.get('project_id');
-        var st = new casco.store.TreeDocuments();
-        st.proxy.extraParams = {project_id: project_id};
-        st.load();
-        this.store = st;
-        this.callParent(arguments);
+    viewModel: {
+        type: 'main'    
+    },  
+    viewConfig: {
+        plugins: {
+            ptype: 'treeviewdragdrop',
+        },
+        listeners: {       
+            drop: function (node, data, overModel, dropPosition) {
+                  var d = {
+                		src: data.records[0].id,
+                		dst: overModel.data.id
+                  };
+          		Ext.Ajax.request({
+        			url : API + 'treemod',
+        			method: 'get',
+        			params : d
+        		});
+            },
+        }
+    },
+    initComponent: function(){
+    	this.store = Ext.create('casco.store.TreeDocuments', {
+    		proxy: {
+    			extraParams: {
+    				project_id: localStorage.project_id
+    			}
+    		}
+    	});
+    	
+    	this.callParent();
     },
     dockedItems: [{
         xtype: 'toolbar',

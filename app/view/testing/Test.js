@@ -6,14 +6,12 @@ Ext.define('casco.view.testing.Test', {
     allowDeselect: true,
 
     viewModel : 'main',
-    initComponent: function(){
-    	var me = this;
-    	
-    	me.callParent(arguments);
-    },
+    
 	bodyPadding: '10',
 	width: '100%',
 	initComponent: function(){
+		var t = Ext.ComponentQuery.query("#mtree")[0];
+		t.store.load()
 		var me = this;
 		me.ss = new casco.store.Tcs();
 		me.ss.load({

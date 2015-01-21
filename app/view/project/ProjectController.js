@@ -14,6 +14,7 @@ Ext.define('casco.view.project.ProjectController', {
         this.getView().destroy();
 
         Ext.widget('app-main', {project: store.findRecord('id', pjt_id)});
+        
     },
     createProject: function(){
     	var self = this;

@@ -8,7 +8,7 @@ Ext.application({
 
     extend: 'casco.Application',
     
-    autoCreateViewport: true//'casco.view.main.Main'
+    autoCreateViewport: false//'casco.view.main.Main'
 	
     //-------------------------------------------------------------------------
     // Most customizations should be made to casco.Application. If you need to

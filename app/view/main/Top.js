@@ -41,21 +41,5 @@ Ext.define('casco.view.main.Top', {
             }]
         }];
     	this.callParent();
-    },
-    getMenu: function(){
-    	var store = Ext.getStore('Projects');alert(store.data.items.length)
-    	var d = [];
-    	store.each(function(r){
-    		d.push({text: r.name})
-    	});
-    	d.push({
-            text: 'Create Project',
-            glyph: 0xf067,
-            handler: function(){
-            	var win = Ext.create('widget.project.create',{listeners:{scope: this}});
-                win.show();
-            }
-        });
-    	return d;
     }
 })
