@@ -49,15 +49,13 @@ Ext.define('casco.view.tc.TcEdit', {
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textfield',
-    	            value: me.tc.title
     	        },{
     	            anchor: '100%',
     	            fieldLabel: 'Description',
-    	            name: 'dsc',
+    	            name: 'description',
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textarea',
-    	            value: me.tc.dsc
     	        },{
     	            anchor: '100%',
     	            fieldLabel: 'Sources',
@@ -65,7 +63,6 @@ Ext.define('casco.view.tc.TcEdit', {
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textarea',
-    	            value: me.tc.sources
     	        },{
     	            anchor: '100%',
     	            fieldLabel: 'Test Method',
@@ -73,7 +70,6 @@ Ext.define('casco.view.tc.TcEdit', {
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textarea',
-    	            value: me.tc.test_method
     	        },{
     	            anchor: '100%',
     	            fieldLabel: 'Pre condition',
@@ -81,7 +77,6 @@ Ext.define('casco.view.tc.TcEdit', {
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textarea',
-    	            value: me.tc.pre_condition
     	        },{
     	            anchor: '100%',
     	            fieldLabel: 'Result',
@@ -89,7 +84,6 @@ Ext.define('casco.view.tc.TcEdit', {
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'combobox',
-    	            value: me.tc.result,
     	            displayField: 'label',
     	            valueField: 'value',
     	            store: Ext.create('Ext.data.Store', {
@@ -105,6 +99,7 @@ Ext.define('casco.view.tc.TcEdit', {
     	        	xtype: 'tcstepedit',
     	        	steps: me.tc.steps,
     	        	reference: 'mgrid',
+    	        	name: 'steps',
     	        	id: 'mgrid'
     	        }]
     	    }]
