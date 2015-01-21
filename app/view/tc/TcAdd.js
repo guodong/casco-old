@@ -14,9 +14,10 @@ Ext.define('casco.view.tc.TcAdd', {
         'casco.view.tc.TcStep',
         'casco.view.document.DocumentController',
         'casco.view.tc.TcAddForm',
+        'casco.view.tc.TcController',
         'casco.store.Rss',
     ],
-    controller: 'document',
+    controller: 'tc',
     resizable: true,
     maximizable: true,
     modal: true,
@@ -78,5 +79,5 @@ Ext.define('casco.view.tc.TcAdd', {
     },
     doHide: function(){
         this.destroy();
-    },
+    }
 });

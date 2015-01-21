@@ -7,8 +7,7 @@ Ext.define('casco.store.Projects', {
         type: 'rest',
         url: API+'project',
         reader: {
-            type: 'json',
-            //rootProperty: 'data'
+            type: 'json'
         },
         writer: {
             type: 'json'

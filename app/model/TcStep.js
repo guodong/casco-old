@@ -13,6 +13,5 @@ Ext.define('casco.model.TcStep', {
 	}, {
 		name : 'exp_res',
 		type : 'string'
-	} ]
-
+	}]
 });

@@ -8,7 +8,7 @@ Ext.define('casco.model.Rs', {
         {name: 'priority', type: 'string'},
         {name: 'contribution', type: 'string'},
         {name: 'description', type: 'string'},
-        {name: 'vat', type: 'string'},
+        {name: 'vat', type: 'string'}
     ],
     proxy: {
         type: 'rest',

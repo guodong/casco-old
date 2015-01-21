@@ -101,5 +101,5 @@ Ext.define('casco.view.rs.RsDetail', {
     },
     doHide: function(){
         this.hide();
-    },
+    }
 });

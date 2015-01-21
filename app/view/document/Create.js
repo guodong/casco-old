@@ -73,5 +73,5 @@ Ext.define('casco.view.document.Create', {
     },
     doHide: function(){
         this.hide();
-    },
+    }
 });

@@ -60,5 +60,5 @@ Ext.define('casco.view.rs.RsImport', {
     
     doHide: function(){
         this.hide();
-    },
+    }
 });

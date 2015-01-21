@@ -7,7 +7,7 @@ Ext.define('casco.store.Tcs', {
         type: 'ajax',
         url: API+'tc',
         reader: {
-            type: 'json',
+            type: 'json'
         },
         writer: {
             type: 'json'

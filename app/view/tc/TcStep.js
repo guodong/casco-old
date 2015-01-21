@@ -111,5 +111,5 @@ Ext.define('casco.view.tc.TcStep', {
 	        }
     	}}, this);
         
-    },
+    }
 });

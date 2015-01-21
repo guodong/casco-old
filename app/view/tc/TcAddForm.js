@@ -86,5 +86,5 @@ Ext.define('casco.view.tc.TcAddForm', {
 
 		} ];
 		me.callParent(arguments);
-	},
+	}
 });

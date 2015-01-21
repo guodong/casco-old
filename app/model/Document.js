@@ -3,7 +3,7 @@ Ext.define('casco.model.Document', {
 	fields: ['id', 'name', 'type', 'project_id', 'leaf'],
 	proxy: {
 		type: 'rest',
-		url: API + 'document',
+		url: API + 'document'
 	}
 
 });

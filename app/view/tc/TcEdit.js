@@ -113,5 +113,5 @@ Ext.define('casco.view.tc.TcEdit', {
     },
     doHide: function(){
         this.hide();
-    },
+    }
 });
