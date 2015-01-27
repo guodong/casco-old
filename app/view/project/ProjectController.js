@@ -28,7 +28,6 @@ Ext.define('casco.view.project.ProjectController', {
     			Ext.Msg.alert('Message', 'Project created successfully.', function(){
 
 		    		self.getView().destroy();
-		    		alert(pjt.get('id'))
 		    		localStorage.project_id = pjt.get('id');
 		    		localStorage.project_name = pjt.get('name');
 		            Ext.widget('app-main');

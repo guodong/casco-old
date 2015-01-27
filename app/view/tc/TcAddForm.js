@@ -1,13 +1,3 @@
-var tm = Ext.create('Ext.data.Store', {
-	fields : [ 'text', 'value' ],
-	data : [ {
-		"text" : "EP",
-		"value" : "EP"
-	}, {
-		"text" : "EG",
-		"value" : "EG"
-	} ]
-});
 Ext.define('casco.view.tc.TcAddForm', {
 	extend : 'Ext.form.Panel',
 
@@ -17,7 +7,7 @@ Ext.define('casco.view.tc.TcAddForm', {
 			'casco.view.document.DocumentController',
 			'casco.store.TcSteps'
 	],
-	controller : 'document',
+	controller : 'tc',
 	autoScroll : true,
 
 	initComponent : function() {
@@ -35,7 +25,7 @@ Ext.define('casco.view.tc.TcAddForm', {
 			autoScroll : true,
 			items : [ {
 				anchor : '100%',
-				fieldLabel : 'Title',
+				fieldLabel : 'Id',
 				name : 'title',
 				labelAlign : 'top',
 				msgTarget : 'under',
@@ -57,8 +47,21 @@ Ext.define('casco.view.tc.TcAddForm', {
 				displayField : 'text',
 				valueField : 'value',
 				allowBlank : false,
-				store : tm
+				store : Ext.create('Ext.data.Store', {
+					fields : [ 'text', 'value' ],
+					data : [ {
+						"text" : "EP",
+						"value" : "EP"
+					}, {
+						"text" : "EG",
+						"value" : "EG"
+					} ]
+				})
 			}, {
+				xtype: 'button',
+				text: 'Add Sources',
+				handler: "addSources"
+			},{
 				xtype : 'combobox',
 				name : 'sources',
 				anchor : '100%',

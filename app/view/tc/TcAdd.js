@@ -1,10 +1,3 @@
-var tm = Ext.create('Ext.data.Store', {
-    fields: ['text', 'value'],
-    data : [
-        {"text":"EP", "value":"EP"},
-        {"text":"EG", "value":"EG"}
-    ]
-});
 Ext.define('casco.view.tc.TcAdd', {
     extend: 'Ext.window.Window',
 
@@ -16,6 +9,7 @@ Ext.define('casco.view.tc.TcAdd', {
         'casco.view.tc.TcAddForm',
         'casco.view.tc.TcController',
         'casco.store.Rss',
+        'casco.view.tc.source.Add'
     ],
     controller: 'tc',
     resizable: true,

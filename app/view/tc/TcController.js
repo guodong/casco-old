@@ -29,5 +29,9 @@ Ext.define('casco.view.tc.TcController', {
 						+ response.status);
 			}
 		});
+	},
+	addSources: function(){
+		var wd = Ext.create("casco.view.tc.source.Add");
+		wd.show();
 	}
 });

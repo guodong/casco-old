@@ -7,7 +7,7 @@ Ext.define('casco.store.Rss', {
         type: 'rest',
         url: API+'rs',
         reader: {
-            type: 'json',
+            type: 'json'
         },
         writer: {
             type: 'json'

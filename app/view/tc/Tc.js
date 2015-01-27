@@ -14,14 +14,16 @@ Ext.define('casco.view.tc.Tc', {
     	});
     	me.store = st;
     	
-        me.tbar = [{
-            text: 'Switch Build Version',
-            menu: [{
-                text: 'Build20140922'
-            },{
-                text: 'Build20140802'
-            }]
-        },{
+        me.tbar = [
+//                   {
+//            text: 'Switch Build Version',
+//            menu: [{
+//                text: 'Build20140922'
+//            },{
+//                text: 'Build20140802'
+//            }]
+//        },
+        {
             text: 'Add Item',
             glyph: 0xf067,
             handler : function() {
@@ -57,17 +59,17 @@ Ext.define('casco.view.tc.Tc', {
     	me.callParent(arguments);
     },
     columns: [
-        {
-            xtype: 'checkcolumn',
-            header: '*',
-            dataIndex: 'active',
-            width: 30,
-            editor: {
-                xtype: 'checkbox',
-                cls: 'x-grid-checkheader-editor'
-            }
-        },
-        {text: "#", dataIndex: "id", width: 50, hideable: false},
+//        {
+//            xtype: 'checkcolumn',
+//            header: '*',
+//            dataIndex: 'active',
+//            width: 30,
+//            editor: {
+//                xtype: 'checkbox',
+//                cls: 'x-grid-checkheader-editor'
+//            }
+//        },
+        //{text: "#", dataIndex: "id", width: 50, hideable: false},
         {text: "id", dataIndex: "title", width: 150, hideable: false},
         {text: "rss", dataIndex: "rss", width: 200, autoShow: false, renderer : function(value) {
 			var str = "";

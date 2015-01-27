@@ -4,7 +4,7 @@ Ext.define('casco.view.main.Tree', {
     requires: ['casco.ux.Registry', 'casco.view.document.Create', 'casco.view.document.FolderCreate'],
 
     listeners: {
-        itemclick: 'seldoc',
+        itemdblclick: 'seldoc',
     },
     displayField: 'name',
 
