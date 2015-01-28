@@ -92,7 +92,7 @@ Ext.define('casco.view.tc.Tc', {
 		}}
     ],
     listeners : {
-        itemdblclick: function(dv, record, item, index, e) {console.log(record.data);
+        itemdblclick: function(dv, record, item, index, e) {
         	var win = Ext.create('widget.tcedit',{listeners:{scope: this}, tc: record.data});
             win.show();
             win.down('form').loadRecord(record);

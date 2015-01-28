@@ -19,6 +19,9 @@ Ext.define('casco.view.tc.TcAddForm', {
 			}
 		});
 		me.ss = st;
+		me.sources = Ext.create('Ext.data.Store', {
+			fields:['title', 'id']
+		});
 		me.items = [ {
 			xtype : 'form',
 			reference : 'TcAddform',
@@ -59,22 +62,23 @@ Ext.define('casco.view.tc.TcAddForm', {
 				})
 			}, {
 				xtype: 'button',
+	            glyph: 0xf067,
 				text: 'Add Sources',
-				handler: "addSources"
+				handler: function(){
+					var wd = Ext.create("casco.view.tc.source.Add", {
+						sources: me.sources
+					});
+					wd.show();
+				}
 			},{
-				xtype : 'combobox',
-				name : 'sources',
-				anchor : '100%',
-				editable : false,
-				fieldLabel : 'Sources',
-				multiSelect : true,
-				labelAlign : 'top',
-				displayField : 'title',
-				valueField : 'id',
-				allowBlank : false,
-				queryMode : 'local',
-				store : me.ss
-			}, {
+				xtype: 'grid',
+				region: 'center',
+				itemId: 'sources',
+			    columns: [
+			        { text: 'Sources',  dataIndex: 'title', flex: 1}
+			    ],
+			    store: me.sources
+			},{
 				anchor : '100%',
 				fieldLabel : 'Pre condition',
 				name : 'pre_condition',

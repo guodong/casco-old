@@ -15,8 +15,13 @@ Ext.define('casco.view.tc.source.Add', {
 		type: 'border'
 	},
 	initComponent: function() {
-		var me = this;
-		
+		var me = this
+		me.addSources = function(record){
+			if(record.data.type != 'item'){
+				return;
+			}
+			me.sources.loadData([{title: record.data.name,id: record.data.item_id}], true);
+		};
 		me.items = [{
 			xtype: 'itemtree',
 			region: 'west',
@@ -24,11 +29,24 @@ Ext.define('casco.view.tc.source.Add', {
 	        split: true,
 	        collapsible: true,
 			autoScroll: true,
-			dockedItems: [],
-			viewConfig: null
+			listeners: {
+				itemdblclick: function(view, record, item, index, e, eOpts){
+					me.addSources(record);
+				}
+			}
 		},{
-			xtype: 'panel',
-			region: 'center'
+			xtype: 'grid',
+			region: 'center',
+			itemId: 'sources',
+		    columns: [
+		        { text: 'Sources',  dataIndex: 'title', flex: 1}
+		    ],
+		    store: me.sources,
+		    listeners : {
+		        itemdblclick: function(dv, record, item, index, e) {
+		        	me.sources.remove(record);
+		        }
+		    }
 		}];
 		me.dockedItems = [{
 			xtype: 'toolbar',
@@ -37,13 +55,7 @@ Ext.define('casco.view.tc.source.Add', {
 				background: '#eee'
 			},
 			items: ['->', {
-				text: 'Save',
-				glyph: 0xf0c7,
-				listeners: {
-					click: 'createTc'
-				}
-			}, {
-				text: 'Cancel',
+				text: 'Ok',
 				glyph: 0xf112,
 				scope: me,
 				handler: this.destroy
@@ -51,8 +63,5 @@ Ext.define('casco.view.tc.source.Add', {
 		}];
 		
 		me.callParent(arguments);
-	},
-	doHide: function() {
-		this.destroy();
 	}
 });
