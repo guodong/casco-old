@@ -50,7 +50,7 @@ Ext.define('casco.view.rs.RsDetail', {
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.title
+    	            value: me.rs.tag
     	        },{
     	            fieldLabel: 'description',
     	            xtype: 'textareafield',

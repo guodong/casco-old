@@ -10,30 +10,10 @@ Ext.define('casco.view.tc.TcStep', {
         'casco.store.TcSteps'
     ],
     id: 'mgrid',
-    store: Ext.create('casco.store.TcSteps', {
-        data: [{
-                num: 1,
-                actions: '',
-                exp_res: ''
-            }
-        ]
-
-    }),
 	columns: [{
-        text: 'step',
-        width: '10%',
-        sortable: true,
-        resizable: false,
-        draggable: false,
-        hideable: false,
-        menuDisabled: true,
-        dataIndex: 'num',
-        renderer: function(value){
-            return Ext.isNumber(value) ? value : '&nbsp;';
-        },
-        field: {
-            type: 'numberfield'
-        }
+		xtype: 'rownumberer',
+		text: 'step',
+		width: 50
     },{
         text: 'Actions',
         width: '45%',
@@ -55,7 +35,7 @@ Ext.define('casco.view.tc.TcStep', {
         draggable: false,
         hideable: false,
         menuDisabled: true,
-        dataIndex: 'exp_res',
+        dataIndex: 'expected_result',
         field: {
             type: 'textareafield'
         }
@@ -67,6 +47,7 @@ Ext.define('casco.view.tc.TcStep', {
     		plugins: [this.editing],
     		dockedItems: [{
     	        xtype: 'toolbar',
+    	        dock: 'bottom',
     	        items: [{
     	            glyph: 0xf067,
     	            text: 'Add',
@@ -93,11 +74,12 @@ Ext.define('casco.view.tc.TcStep', {
         var rec = new casco.model.TcStep({
             num: this.store.getCount() + 1,
             actions: '',
-            er: ''
+            expected_result: ''
         }), edit = this.editing;
-
+        
         edit.cancelEdit();
-        this.store.insert(this.store.getCount(), rec);
+        this.store.add(rec);
+        this.getView().refresh();
         edit.startEditByPosition({
             row: this.store.getCount() - 1,
             column: 1
@@ -108,6 +90,7 @@ Ext.define('casco.view.tc.TcStep', {
     		var selection = this.getView().getSelectionModel().getSelection()[0];
 	        if (selection) {
 	            this.store.remove(selection);
+	            this.getView().refresh();
 	        }
     	}}, this);
         

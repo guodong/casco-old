@@ -8,38 +8,37 @@ Ext.define('casco.view.tc.TcAddForm', {
 			'casco.store.TcSteps'
 	],
 	controller : 'tc',
-	autoScroll : true,
-
+	//autoScroll : true,
+	width: 'auto',
 	initComponent : function() {
 		var me = this;
-		var st = new casco.store.Rss();
-		st.load({
-			params : {
-				document_id : 1
-			}
-		});
-		me.ss = st;
 		me.sources = Ext.create('Ext.data.Store', {
 			fields:['title', 'id']
 		});
+		me.steps = Ext.create('Ext.data.Store', {
+			model: 'casco.model.TcStep'
+		});
+		
 		me.items = [ {
 			xtype : 'form',
 			reference : 'TcAddform',
 			autoScroll : true,
 			items : [ {
 				anchor : '100%',
-				fieldLabel : 'Id',
-				name : 'title',
+				fieldLabel : 'Tag',
+				name : 'tag',
 				labelAlign : 'top',
 				msgTarget : 'under',
-				xtype : 'textfield'
+				xtype : 'textfield',
+	            allowBlank: false
 			}, {
 				anchor : '100%',
 				fieldLabel : 'Description',
-				name : 'dsc',
+				name : 'description',
 				labelAlign : 'top',
 				msgTarget : 'under',
-				xtype : 'textarea'
+				xtype : 'textarea',
+	            allowBlank: false
 			}, {
 				xtype : 'combobox',
 				name : 'test_method',
@@ -59,39 +58,47 @@ Ext.define('casco.view.tc.TcAddForm', {
 						"text" : "EG",
 						"value" : "EG"
 					} ]
-				})
-			}, {
-				xtype: 'button',
-	            glyph: 0xf067,
-				text: 'Add Sources',
-				handler: function(){
-					var wd = Ext.create("casco.view.tc.source.Add", {
-						sources: me.sources
-					});
-					wd.show();
-				}
-			},{
-				xtype: 'grid',
-				region: 'center',
-				itemId: 'sources',
-			    columns: [
-			        { text: 'Sources',  dataIndex: 'title', flex: 1}
-			    ],
-			    store: me.sources
+				}),
+	            allowBlank: false
 			},{
 				anchor : '100%',
 				fieldLabel : 'Pre condition',
 				name : 'pre_condition',
 				labelAlign : 'top',
 				msgTarget : 'under',
-				xtype : 'textarea'
+				xtype : 'textarea',
+	            allowBlank: false
+			}, {
+				xtype: 'grid',
+				region: 'center',
+				itemId: 'sources',
+				dockedItems: [{
+	    	        xtype: 'toolbar',
+	    	        dock: 'bottom',
+	    	        items: [{
+	    	            glyph: 0xf067,
+	    	            text: 'Add Sources',
+	    	            handler: function(){
+	    					var wd = Ext.create("casco.view.tc.source.Add", {
+	    						sources: me.sources
+	    					});
+	    					wd.show();
+	    				}
+	    	        }]
+	    	    }],
+			    columns: [
+			        { text: 'Sources',  dataIndex: 'tag', flex: 1}
+			    ],
+			    store: me.sources
 			}, {
 				xtype : 'tcstep',
 				reference : 'mgrid',
-				id: 'mgrid'
-			} ]
+				id: 'mgrid',
+				store: me.steps
+			}],
+			
 
-		} ];
+		}];
 		me.callParent(arguments);
 	}
 });

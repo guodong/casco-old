@@ -44,7 +44,7 @@ Ext.define('casco.view.main.MainController', {
 				id: 'tab-'+json.id,
 				xtype: type,
 				title: json.name,
-				doc_id: json.id,
+				document_id: json.id,
 				closable: true
 			});
 		}

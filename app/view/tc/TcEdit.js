@@ -18,13 +18,7 @@ Ext.define('casco.view.tc.TcEdit', {
     
     initComponent: function(){
     	var me = this;
-    	var st = new casco.store.Rss();
-		st.load({
-			params : {
-				document_id : 1
-			}
-		});
-		me.ss = st;
+    	//me.sources = Ext.create('casco.store.tc.Sources');
     	Ext.apply(me, {
     		dockedItems: [{
                 xtype: 'toolbar',
@@ -51,8 +45,8 @@ Ext.define('casco.view.tc.TcEdit', {
     	    	bodyPadding: '10',
     	    	items: [{
     	            anchor: '100%',
-    	            fieldLabel: 'Title',
-    	            name: 'title',
+    	            fieldLabel: 'Tag',
+    	            name: 'tag',
     	            labelAlign: 'top',
     	            msgTarget: 'under',
     	            xtype: 'textfield',
@@ -64,18 +58,13 @@ Ext.define('casco.view.tc.TcEdit', {
     	            msgTarget: 'under',
     	            xtype: 'textarea',
     	        },{
-    				xtype : 'combobox',
-    				name : 'sources',
-    				anchor : '100%',
-    				editable : false,
-    				fieldLabel : 'Sources',
-    				multiSelect : true,
-    				labelAlign : 'top',
-    				displayField : 'title',
-    				valueField : 'id',
-    				allowBlank : false,
-    				queryMode : 'local',
-    				store : me.ss
+//    				xtype: 'grid',
+//    				region: 'center',
+//    				itemId: 'sources',
+//    			    columns: [
+//    			        { text: 'Sources',  dataIndex: 'tag', flex: 1}
+//    			    ],
+//    			    store: me.sources
     			},{
     	            anchor: '100%',
     	            fieldLabel: 'Test Method',

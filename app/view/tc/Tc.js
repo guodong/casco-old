@@ -10,24 +10,16 @@ Ext.define('casco.view.tc.Tc', {
     	var me = this;
     	var st = new casco.store.Tcs;
     	st.load({
-    		params: {document_id: me.doc_id}
+    		params: {document_id: me.document_id}
     	});
     	me.store = st;
     	
         me.tbar = [
-//                   {
-//            text: 'Switch Build Version',
-//            menu: [{
-//                text: 'Build20140922'
-//            },{
-//                text: 'Build20140802'
-//            }]
-//        },
         {
             text: 'Add Item',
             glyph: 0xf067,
             handler : function() {
-                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, doc_id: me.doc_id});
+                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, document_id: me.document_id});
                 win.show();
             }
         },{
@@ -70,13 +62,13 @@ Ext.define('casco.view.tc.Tc', {
 //            }
 //        },
         //{text: "#", dataIndex: "id", width: 50, hideable: false},
-        {text: "id", dataIndex: "title", width: 150, hideable: false},
-        {text: "rss", dataIndex: "rss", width: 200, autoShow: false, renderer : function(value) {
-			var str = "";
+        {text: "tag", dataIndex: "tag", width: 150, hideable: false},
+        {text: "sources", dataIndex: "sources", width: 200, autoShow: false, renderer : function(value) {
+			var arr = [];
 			Ext.Array.each(value, function(v) {
-		        str += v.title;
+		        arr.push(v.tag);
 		    });
-			return str;
+			return arr.join(', ');
 		}},
         {text: "test method", dataIndex: "test_method", width: 100},
         {text: "pre condition", dataIndex: "pre_condition", flex: 1},
@@ -93,7 +85,7 @@ Ext.define('casco.view.tc.Tc', {
     ],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.tcedit',{listeners:{scope: this}, tc: record.data});
+        	var win = Ext.create('widget.tcedit',{listeners:{scope: this}, tc: record.data, tc_id: record.data.id});
             win.show();
             win.down('form').loadRecord(record);
         }

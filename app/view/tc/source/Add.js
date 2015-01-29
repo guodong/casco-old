@@ -20,7 +20,7 @@ Ext.define('casco.view.tc.source.Add', {
 			if(record.data.type != 'item'){
 				return;
 			}
-			me.sources.loadData([{title: record.data.name,id: record.data.item_id}], true);
+			me.sources.loadData([{tag: record.data.name,id: record.data.item_id}], true);
 		};
 		me.items = [{
 			xtype: 'itemtree',
@@ -39,7 +39,7 @@ Ext.define('casco.view.tc.source.Add', {
 			region: 'center',
 			itemId: 'sources',
 		    columns: [
-		        { text: 'Sources',  dataIndex: 'title', flex: 1}
+		        { text: 'Sources',  dataIndex: 'tag', flex: 1}
 		    ],
 		    store: me.sources,
 		    listeners : {

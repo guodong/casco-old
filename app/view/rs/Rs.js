@@ -52,8 +52,8 @@ Ext.define('casco.view.rs.Rs', {
 					cls : 'x-grid-checkheader-editor'
 				}
 			},{
-				text : "title",
-				dataIndex : "title",
+				text : "tag",
+				dataIndex : "tag",
 				width : 130
 			},
 			{
