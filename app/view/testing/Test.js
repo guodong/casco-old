@@ -1,7 +1,7 @@
 Ext.define('casco.view.testing.Test', {
     extend : 'Ext.form.Panel',
     alias : 'widget.test',
-    requires: ['casco.view.tc.TcAdd', 'casco.store.Tcs', 'casco.view.tc.TcEdit'],
+    requires: ['casco.view.tc.TcAdd', 'casco.store.Tcs'],
 
     allowDeselect: true,
 

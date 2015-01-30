@@ -4,28 +4,101 @@ Ext.define('casco.view.tc.TcAdd', {
 	alias: 'widget.tcadd',
 	requires: ['casco.view.document.DocTree', 'casco.view.tc.TcStep',
 			'casco.view.document.DocumentController',
-			'casco.view.tc.TcAddForm', 'casco.view.tc.TcController',
-			'casco.store.Rss', 'casco.view.tc.source.Add'],
+			 'casco.view.tc.TcController',
+			 'casco.view.tc.source.Add','casco.store.TcSteps','casco.store.Sources'],
 	controller: 'tc',
-	//resizable: true,
-	//maximizable: true,
 	modal: true,
-	title: 'Add Tc Item',
+	title: 'Tc Item',
 	width: 800,
 	maxHeight: 600,
 	autoScroll: true,
-	//layout: {
-		//type: 'border'
-	//},
 
 	initComponent: function() {
 		var me = this;
-
+		me.sources = Ext.create('casco.store.Sources');
+		me.steps = Ext.create('casco.store.TcSteps');
+		if(me.tc){
+			me.sources.setData(me.tc.get('sources'));
+			me.steps.setData(me.tc.get('steps'));
+		}
 		me.items = [{
-			xtype: 'tcaddform',
+			xtype: 'form',
 			reference: 'TcAddform',
-			//region: 'center',
 			bodyPadding: 10,
+			items: [{
+				name : 'id',
+				xtype : 'hiddenfield',
+			},{
+				anchor : '100%',
+				fieldLabel : 'Tag',
+				name : 'tag',
+				//labelAlign : 'top',
+				xtype : 'textfield',
+	            allowBlank: false
+			}, {
+				anchor : '100%',
+				fieldLabel : 'Description',
+				name : 'description',
+				//labelAlign : 'top',
+				xtype : 'textarea',
+	            allowBlank: false
+			}, {
+				xtype : 'combobox',
+				name : 'test_method',
+				anchor : '100%',
+				editable : false,
+				fieldLabel : 'Test Methods',
+				//labelAlign : 'top',
+				displayField : 'text',
+				valueField : 'value',
+				allowBlank : false,
+				store : Ext.create('Ext.data.Store', {
+					fields : [ 'text', 'value' ],
+					data : [ {
+						"text" : "EP",
+						"value" : "EP"
+					}, {
+						"text" : "EG",
+						"value" : "EG"
+					} ]
+				}),
+	            allowBlank: false
+			},{
+				anchor : '100%',
+				fieldLabel : 'Pre condition',
+				name : 'pre_condition',
+				//labelAlign : 'top',
+				xtype : 'textarea',
+				maxHeight: 50,
+	            allowBlank: false
+			}, {
+				xtype: 'grid',
+				region: 'center',
+				fieldLabel: 'Sources',
+				dockedItems: [{
+	    	        xtype: 'toolbar', 
+	    	        dock: 'bottom',
+	    	        items: [{
+	    	            glyph: 0xf067,
+	    	            text: 'Edit Sources',
+	    	            handler: function(){
+	    					var wd = Ext.create("casco.view.tc.source.Add", {
+	    						sources: me.sources
+	    					});
+	    					wd.show();
+	    				}
+	    	        }]
+	    	    }],
+			    columns: [
+			        { text: 'Sources',  dataIndex: 'tag', flex: 1}
+			    ],
+			    store: me.sources
+			}, {
+				xtype : 'tcstep',
+				reference : 'mgrid',
+				id: 'mgrid',
+				store: me.steps
+			}],
 			buttons: ['->', {
 				text: 'Save',
 				formBind: true,

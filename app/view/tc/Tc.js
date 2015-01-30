@@ -1,7 +1,7 @@
 Ext.define('casco.view.tc.Tc', {
     extend : 'Ext.grid.Panel',
     alias : 'widget.tc',
-    requires: ['casco.view.tc.TcAdd', 'casco.store.Tcs', 'casco.view.tc.TcEdit'],
+    requires: ['casco.view.tc.TcAdd', 'casco.store.Tcs'],
     title : 'TSP-SyRTC',
     allowDeselect: true,
 
@@ -85,9 +85,9 @@ Ext.define('casco.view.tc.Tc', {
     ],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.tcedit',{listeners:{scope: this}, tc: record.data, tc_id: record.data.id});
-            win.show();
+        	var win = Ext.create('widget.tcadd',{tc: record, document_id: this.document_id});
             win.down('form').loadRecord(record);
+            win.show();
         }
     }
 })

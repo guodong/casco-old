@@ -4,13 +4,13 @@ Ext.define('casco.view.tc.TcController', {
 
 	createTc : function() {
 		var view = this.getView();
+		var tc = view.tc;
 		var form = view.down('form');
-		console.log(form.getValues());
 		var data = form.getValues(); //提交的数据
 		data.document_id = view.document_id;
 		data.steps = [];
 		var i = 1;
-		form.steps.each(function(s){
+		view.steps.each(function(s){
 			data.steps.push({ 
 				num: i,
 				actions: s.data.actions,
@@ -19,16 +19,16 @@ Ext.define('casco.view.tc.TcController', {
 			i++;
 		});
 		data.sources = [];
-		form.sources.each(function(s){
-			data.sources.push(s.id);
-		})
-		Ext.Ajax.request({
-			url : API + 'tc',
-			jsonData: data,
-			success : function(response, opts) {
+		view.sources.each(function(s){
+			data.sources.push(s.getData());
+		});
+		//var tc = Ext.create('casco.model.Tc');console.log(tc.get('tag'))
+		tc.set(data);
+		tc.save({
+			callback: function() {
 				form.up("window").destroy();
-				var t = Ext.ComponentQuery.query("#tab-" + data.document_id)[0];
-				t.store.reload();
+				//var t = Ext.ComponentQuery.query("#tab-" + data.document_id)[0];
+				//t.store.reload();
 			}
 		});
 	}

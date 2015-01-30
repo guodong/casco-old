@@ -10,7 +10,7 @@ Ext.define('casco.view.rs.Rs', {
 		var st = new casco.store.Rss();
 		st.load({
 			params : {
-				document_id : me.doc_id
+				document_id : me.document_id
 			}
 		});
 		me.store = st;
@@ -23,7 +23,7 @@ Ext.define('casco.view.rs.Rs', {
 					listeners : {
 						scope : this
 					},
-					doc_id : me.doc_id
+					doc_id : me.document_id
 				});
 				win.show();
 			}

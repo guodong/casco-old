@@ -63,9 +63,9 @@ Ext.define('casco.view.tc.TcStep', {
     	        }]
     	    }],
     	});
-
-    	me.callParent(arguments);
+    	me.callParent(arguments); //必须在getSelectionModel上边，否则报错
     	this.getSelectionModel().on('selectionchange', this.onSelectChange, this);
+
     },
     onSelectChange: function(selModel, selections){
         this.down('#delete').setDisabled(selections.length === 0);
