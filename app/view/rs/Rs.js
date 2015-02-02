@@ -33,11 +33,9 @@ Ext.define('casco.view.rs.Rs', {
 	listeners : {
 		itemdblclick : function(dv, record, item, index, e) {
 			var win = Ext.create('widget.rs.rsdetail', {
-				listeners : {
-					scope : this
-				},
-				rs : record.data
+				rs : record
 			});
+			win.down('form').loadRecord(record);
 			win.show();
 		}
 	},
@@ -78,7 +76,7 @@ Ext.define('casco.view.rs.Rs', {
 				renderer : function(value) {
 					var str = "";
 					Ext.Array.each(value, function(v) {
-				        str += v.title+" ";
+				        str += v.tag+" ";
 				    });
 					return str;
 				}

@@ -51,7 +51,6 @@ Ext.define('casco.view.tc.TcAdd', {
 				//labelAlign : 'top',
 				displayField : 'text',
 				valueField : 'value',
-				allowBlank : false,
 				store : Ext.create('Ext.data.Store', {
 					fields : [ 'text', 'value' ],
 					data : [ {
@@ -70,6 +69,30 @@ Ext.define('casco.view.tc.TcAdd', {
 				//labelAlign : 'top',
 				xtype : 'textarea',
 				maxHeight: 50,
+	            allowBlank: false
+			}, {
+				xtype : 'combobox',
+				name : 'result',
+				anchor : '100%',
+				hidden: me.tc?false:true,
+				editable : false,
+				fieldLabel : 'result',
+				//labelAlign : 'top',
+				displayField : 'text',
+				valueField : 'value',
+				store : Ext.create('Ext.data.Store', {
+					fields : [ 'text', 'value' ],
+					data : [ {
+						"text" : "untested",
+						"value" : 0
+					}, {
+						"text" : "passed",
+						"value" : 1
+					}, {
+						"text" : "failed",
+						"value" : 2
+					} ]
+				}),
 	            allowBlank: false
 			}, {
 				xtype: 'grid',

@@ -17,7 +17,7 @@ Ext.define('casco.view.tc.Tc', {
         me.tbar = [
         {
             text: 'Add Item',
-            glyph: 0xf067,
+            glyph: 0xf067, 
             handler : function() {
                 var win = Ext.create('widget.tcadd',{listeners:{scope: this}, document_id: me.document_id});
                 win.show();
@@ -32,7 +32,7 @@ Ext.define('casco.view.tc.Tc', {
             text: 'Export Document',
             glyph: 0xf019,
             handler : function() {
-            	window.open(API+'tc/export?doc_id='+me.doc_id);
+            	window.open(API+'tc/export?document_id='+me.document_id);
             	return;
             	Ext.Ajax.request({
         			url : API + 'tc/export',
@@ -77,9 +77,9 @@ Ext.define('casco.view.tc.Tc', {
 			case 0:
 				return 'untested';
 			case 1:
-				return 'passed';
+				return '<span style="color:green">passed</span>';
 			case 2:
-				return 'failed';
+				return '<span style="color:red">failed</span>';
 			}
 		}}
     ],

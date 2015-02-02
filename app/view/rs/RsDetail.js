@@ -27,11 +27,10 @@ Ext.define('casco.view.rs.RsDetail', {
                 },
                 {
                     text: 'Save',
-                    glyph: 0xf112,
+                    glyph: 0xf0c7,
                     scope: me,
                     handler : function(){
-                    	var rs = new casco.model.Rs();
-                    	rs.set('id', me.rs.id);
+                    	var rs = me.rs;
                     	rs.set('vat', me.down("#vat").getValue());
                     	rs.save({
                     		method: 'PUT'
@@ -46,54 +45,54 @@ Ext.define('casco.view.rs.RsDetail', {
     	    	bodyPadding: '10',
     	    	width: '100%',
     	    	items: [{
-    	            fieldLabel: 'title',
+    	            fieldLabel: 'tag',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.tag
+    	            name: 'tag'
     	        },{
     	            fieldLabel: 'description',
     	            xtype: 'textareafield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.description
+    	            name: 'description'
     	        },{
     	            fieldLabel: 'implement',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.implement
+    	            name: 'implement'
     	        },{
     	            fieldLabel: 'priority',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.priority
+    	            name: 'priority'
     	        },{
     	            fieldLabel: 'contribution',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.contribution
+    	            name: 'contribution'
     	        },{
     	            fieldLabel: 'category',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.category
+    	            name: 'category'
     	        },{
     	            fieldLabel: 'allocation',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
-    	            value: me.rs.allocation
+    	            name: 'allocation'
     	        },{
     	            fieldLabel: 'vat',
     	            xtype: 'textfield',
     	            id: 'vat',
     	            editable: true,
         	    	width: '100%',
-    	            value: me.rs.vat
+    	            name: 'vat'
     	        }]
     	    }]
     	});
