@@ -5,7 +5,6 @@ Ext.define('casco.view.rs.RsDetail', {
     uses: [
            'casco.view.document.DocumentController'
     ],
-    controller: 'document',
     
     modal: true,
     title: 'Rs Detail',
@@ -13,6 +12,10 @@ Ext.define('casco.view.rs.RsDetail', {
     
     initComponent: function(){
     	var me = this;
+    	me.vat = Ext.create('casco.store.Vat');
+		if(me.rs){
+			me.vat.setData(me.rs.get('vat'));
+		}
     	Ext.apply(me, {
     		dockedItems: [{
                 xtype: 'toolbar',
@@ -31,10 +34,12 @@ Ext.define('casco.view.rs.RsDetail', {
                     scope: me,
                     handler : function(){
                     	var rs = me.rs;
-                    	rs.set('vat', me.down("#vat").getValue());
-                    	rs.save({
-                    		method: 'PUT'
-                    	});
+                    	var vat = [];
+                    	me.vat.each(function(s){
+                			vat.push(s.getData());
+                		});
+                    	rs.set('vat', vat);
+                    	rs.save();
                     	this.destroy();
                     }
                 }
@@ -93,7 +98,28 @@ Ext.define('casco.view.rs.RsDetail', {
     	            editable: true,
         	    	width: '100%',
     	            name: 'vat'
-    	        }]
+    	        }, {
+    				xtype: 'grid',
+    				fieldLabel: 'Vat',
+    				dockedItems: [{
+    	    	        xtype: 'toolbar', 
+    	    	        dock: 'bottom',
+    	    	        items: [{
+    	    	            glyph: 0xf067,
+    	    	            text: 'Edit Vat',
+    	    	            handler: function(){
+    	    					var wd = Ext.create("casco.view.rs.vat.Add", {
+    	    						vat: me.vat
+    	    					});
+    	    					wd.show();
+    	    				}
+    	    	        }]
+    	    	    }],
+    			    columns: [
+    			        { text: 'Vat',  dataIndex: 'tag', flex: 1}
+    			    ],
+    			    store: me.vat
+    			}]
     	    }]
     	});
     	me.callParent(arguments);

@@ -1,107 +1,104 @@
 Ext.define('casco.view.rs.Rs', {
-	extend : 'Ext.grid.Panel',
-	alias : 'widget.rs',
-	requires : [ 'casco.view.rs.RsImport', 'casco.store.Rss' ],
-	autoHeight : true,
-	allowDeselect : false,
-	viewModel : 'main',
-	initComponent : function() {
+	extend: 'Ext.grid.Panel',
+	alias: 'widget.rs',
+	requires: ['casco.view.rs.RsImport', 'casco.store.Rss'],
+	autoHeight: true,
+	allowDeselect: false,
+	viewModel: 'main',
+	initComponent: function() {
 		var me = this;
 		var st = new casco.store.Rss();
 		st.load({
-			params : {
-				document_id : me.document_id
+			params: {
+				document_id: me.document_id
 			}
 		});
 		me.store = st;
-		me.tbar = [ {
-			text : 'Import Document',
-			glyph : 0xf093,
-			scope : this,
-			handler : function() {
+		me.tbar = [{
+			text: 'Import Document',
+			glyph: 0xf093,
+			scope: this,
+			handler: function() {
 				var win = Ext.create('widget.rs.rsimport', {
-					listeners : {
-						scope : this
+					listeners: {
+						scope: this
 					},
-					doc_id : me.document_id
+					doc_id: me.document_id
 				});
 				win.show();
 			}
-		} ]
+		}]
 		me.callParent(arguments);
 	},
-	listeners : {
-		itemdblclick : function(dv, record, item, index, e) {
+	listeners: {
+		itemdblclick: function(dv, record, item, index, e) {
 			var win = Ext.create('widget.rs.rsdetail', {
-				rs : record
+				rs: record
 			});
 			win.down('form').loadRecord(record);
 			win.show();
 		}
 	},
-	columns : [
-			{
-				xtype : 'checkcolumn',
-				header : '',
-				dataIndex : 'active',
-				width : 60,
-				editor : {
-					xtype : 'checkbox',
-					cls : 'x-grid-checkheader-editor'
-				}
-			},{
-				text : "tag",
-				dataIndex : "tag",
-				width : 130
-			},
-			{
-				text : "implement",
-				dataIndex : "implement",
-				width : 100
-			},
-			{
-				text : "category",
-				dataIndex : "category",
-				width : 130
-			},
-			{
-				text : "allocation",
-				dataIndex : "allocation",
-				flex: 1
-			},
-			{
-				text : "tcs",
-				dataIndex : "tcs",
-				width : 250,
-				renderer : function(value) {
-					var str = "";
-					Ext.Array.each(value, function(v) {
-				        str += v.tag+" ";
-				    });
-					return str;
-				}
-			},
-			{
-				text : "vat",
-				dataIndex : "vat",
-				width : 250
-			},
-	// {
-	// xtype:'actioncolumn',
-	// width:50,
-	// items: [{
-	// icon: '/resources/images/cog_edit.png', // Use a URL in the icon config
-	// text: 'Edit',
-	// glyph : 0xf015,
-	// tooltip: 'Edit',
-	// handler: function(grid, rowIndex, colIndex) {
-	// var win = new casco.view.main.EditRS();
-	// win.show();
-	// return;
-	// var rec = grid.getStore().getAt(rowIndex);
-	// alert("Edit " + rec.get('firstname'));
-	// }
-	// }]
-	// }
-	]
+	columns: [{
+		xtype: 'checkcolumn',
+		header: '',
+		dataIndex: 'active',
+		width: 60,
+		editor: {
+			xtype: 'checkbox',
+			cls: 'x-grid-checkheader-editor'
+		}
+	}, {
+		text: "tag",
+		dataIndex: "tag",
+		width: 130
+	}, {
+		text: "implement",
+		dataIndex: "implement",
+		width: 100
+	}, {
+		text: "category",
+		dataIndex: "category",
+		width: 130
+	}, {
+		text: "allocation",
+		dataIndex: "allocation",
+		flex: 1
+	}, {
+		text: "tcs",
+		dataIndex: "tcs",
+		width: 250,
+		renderer: function(value) {
+			var str = "";
+			Ext.Array.each(value, function(v) {
+				str += v.tag + " ";
+			});
+			return str;
+		}
+	}, {
+		text: "vat",
+		dataIndex: "vat",
+		width: 250,
+		renderer : function(value) {
+			var arr = [];
+			Ext.Array.each(value, function(v) {
+		        arr.push(v.tag);
+		    });
+			return arr.join(', ');
+		}
+	}, {
+		text: "result",
+		dataIndex: "result",
+		width: 150,
+		renderer : function(value) {
+			switch(value){
+			case 0:
+				return 'untested';
+			case 1:
+				return '<span style="color:green">passed</span>';
+			case 2:
+				return '<span style="color:red">failed</span>';
+			}
+		}
+	}]
 })
