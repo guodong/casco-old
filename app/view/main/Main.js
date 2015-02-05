@@ -25,10 +25,10 @@ Ext.define('casco.view.main.Main', {
 
     layout: {
         type: 'border'
-    },    
+    },
     initComponent : function() {
 		Ext.setGlyphFontFamily('FontAwesome'); // 设置图标字体文件，只有设置了以后才能用glyph属性
-		
+		var me = this;
 		this.items = [{
 	        region: 'north',
 	        xtype: 'top'
@@ -47,7 +47,7 @@ Ext.define('casco.view.main.Main', {
 	        reference: 'main',
 	        items:[{
 	            title: 'Main',
-	            html: ''//'<iframe src="/draw/index.html" style="width:100%;height:100%;border:0"></iframe>'
+	            html: '<iframe src="/draw/index.html?'+localStorage.project_id+'" style="width:100%;height:100%;border:0"></iframe>'
 	        }]
 	    }]
 		this.callParent();
