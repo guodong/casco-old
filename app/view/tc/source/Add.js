@@ -29,6 +29,7 @@ Ext.define('casco.view.tc.source.Add', {
 	        split: true,
 	        collapsible: true,
 			autoScroll: true,
+			document_id: me.document_id,
 			listeners: {
 				itemdblclick: function(view, record, item, index, e, eOpts){
 					me.addSources(record);

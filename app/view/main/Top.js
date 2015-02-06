@@ -15,7 +15,7 @@ Ext.define('casco.view.main.Top', {
     	this.items = [{
             xtype: 'label',
             html: 'CASCO TEST CENTER',
-            style: 'font-size: 30px;'
+            style: 'font-size: 27px;'
         },{
             xtype: 'label',
             bind: {

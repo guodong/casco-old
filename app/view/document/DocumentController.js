@@ -12,7 +12,8 @@ Ext.define('casco.view.document.DocumentController', {
 		pjt.save({
 			callback: function(){
 				var t = Ext.ComponentQuery.query("#mtree")[0];
-				t.store.reload()
+				t.store.reload();
+				document.getElementById('draw').contentWindow.location.reload();
 			}
 		});
 		

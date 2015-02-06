@@ -106,7 +106,8 @@ Ext.define('casco.view.tc.TcAdd', {
 	    	            text: 'Edit Sources',
 	    	            handler: function(){
 	    					var wd = Ext.create("casco.view.tc.source.Add", {
-	    						sources: me.sources
+	    						sources: me.sources,
+	    						document_id: me.document_id
 	    					});
 	    					wd.show();
 	    				}

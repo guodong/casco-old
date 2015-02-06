@@ -47,7 +47,7 @@ Ext.define('casco.view.main.Main', {
 	        reference: 'main',
 	        items:[{
 	            title: 'Main',
-	            html: '<iframe src="/draw/index.html?'+localStorage.project_id+'" style="width:100%;height:100%;border:0"></iframe>'
+	            html: '<iframe id="draw" src="/draw/index.html?'+localStorage.project_id+'" style="width:100%;height:100%;border:0"></iframe>'
 	        }]
 	    }]
 		this.callParent();
