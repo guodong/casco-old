@@ -47,7 +47,7 @@ Ext.define('casco.view.rs.RsImport', {
     	                    failure: function(form, action) {
     	                    	self.up('window').destroy();
 
-    	                    	var t = Ext.ComponentQuery.query("#tab-"+me.doc_id)[0];
+    	                    	var t = Ext.ComponentQuery.query("#tab-"+me.document_id)[0];
     	          		      	t.store.reload();
     	                    }
     	                });

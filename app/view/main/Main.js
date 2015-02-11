@@ -26,6 +26,7 @@ Ext.define('casco.view.main.Main', {
     layout: {
         type: 'border'
     },
+    itemId: 'maintest',
     initComponent : function() {
 		Ext.setGlyphFontFamily('FontAwesome'); // 设置图标字体文件，只有设置了以后才能用glyph属性
 		var me = this;

@@ -2,7 +2,7 @@ Ext.define("casco.view.project.Project", {
 	extend : 'Ext.window.Window',
 	xtype : 'project',
 
-	requires : [ 'casco.view.project.ProjectController', 'casco.view.project.Create'],
+	requires : [ 'casco.view.project.ProjectController'],
 
 	controller : 'project',
 	title : 'Projects',

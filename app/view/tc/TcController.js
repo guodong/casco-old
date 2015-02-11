@@ -27,8 +27,8 @@ Ext.define('casco.view.tc.TcController', {
 		tc.save({
 			callback: function() {
 				form.up("window").destroy();
-				//var t = Ext.ComponentQuery.query("#tab-" + data.document_id)[0];
-				//t.store.reload();
+				var t = Ext.ComponentQuery.query("#tab-" + data.document_id)[0];
+				t.store.reload();
 			}
 		});
 	}

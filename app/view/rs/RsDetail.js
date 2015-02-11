@@ -2,8 +2,10 @@ Ext.define('casco.view.rs.RsDetail', {
     extend: 'Ext.window.Window',
 
     alias: 'widget.rs.rsdetail',
-    uses: [
-           'casco.view.document.DocumentController'
+    requires: [
+           'casco.view.document.DocumentController',
+           'casco.store.Vatstrs',
+           'casco.store.Vat'
     ],
     
     modal: true,
@@ -16,6 +18,10 @@ Ext.define('casco.view.rs.RsDetail', {
 		if(me.rs){
 			me.vat.setData(me.rs.get('vat'));
 		}
+		me.vatstrstore = Ext.create('casco.store.Vatstr');
+		me.vatstrstore.load({
+    		params: {project_id: localStorage.project_id}
+    	});
     	Ext.apply(me, {
     		dockedItems: [{
                 xtype: 'toolbar',
@@ -39,7 +45,15 @@ Ext.define('casco.view.rs.RsDetail', {
                 			vat.push(s.getData());
                 		});
                     	rs.set('vat', vat);
-                    	rs.save();
+                    	if(me.down("#vatstr_id").getValue().length == 36)
+                    		rs.set('vatstr_id', me.down("#vatstr_id").getValue());
+                    	rs.save({
+                    		callback: function(){
+                            	var t = Ext.ComponentQuery.query("#tab-"+me.document_id)[0];
+                  		      	t.store.reload();
+                    		}
+                    	});
+
                     	this.destroy();
                     }
                 }
@@ -60,44 +74,55 @@ Ext.define('casco.view.rs.RsDetail', {
     	            xtype: 'textareafield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'description'
     	        },{
     	            fieldLabel: 'implement',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'implement'
     	        },{
     	            fieldLabel: 'priority',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'priority'
     	        },{
     	            fieldLabel: 'contribution',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'contribution'
     	        },{
     	            fieldLabel: 'category',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'category'
     	        },{
     	            fieldLabel: 'allocation',
     	            xtype: 'textfield',
     	            editable: false,
         	    	width: '100%',
+    				hidden: me.editvat?true:false,
     	            name: 'allocation'
     	        },{
-    	            fieldLabel: 'vat',
-    	            xtype: 'textfield',
-    	            id: 'vat',
+    	            fieldLabel: 'vat string',
+    	            xtype: 'combobox',
+    	            queryMode: 'local',
+    	            displayField: 'name',
+    	            valueField: 'id',
+    	            id: 'vatstr_id',
     	            editable: true,
         	    	width: '100%',
-    	            name: 'vat'
+    	            name: 'vatstr_id',
+    	            store: me.vatstrstore,
+    	            editable: false
     	        }, {
     				xtype: 'grid',
     				fieldLabel: 'Vat',

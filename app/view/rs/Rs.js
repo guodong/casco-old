@@ -1,7 +1,7 @@
 Ext.define('casco.view.rs.Rs', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.rs',
-	requires: ['casco.view.rs.RsImport', 'casco.store.Rss'],
+	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail'],
 	autoHeight: true,
 	allowDeselect: false,
 	viewModel: 'main',
@@ -27,17 +27,19 @@ Ext.define('casco.view.rs.Rs', {
 				});
 				win.show();
 			}
-		}]
+		}];
+		me.listeners = {
+			celldblclick: function(a,b,c,record){
+				var win = Ext.create('widget.rs.rsdetail', {
+					rs: record,
+					editvat: c==7,
+					document_id: me.document_id
+				});
+				win.down('form').loadRecord(record);
+				win.show();
+			}
+		};
 		me.callParent(arguments);
-	},
-	listeners: {
-		itemdblclick: function(dv, record, item, index, e) {
-			var win = Ext.create('widget.rs.rsdetail', {
-				rs: record
-			});
-			win.down('form').loadRecord(record);
-			win.show();
-		}
 	},
 	columns: [{
 		xtype: 'checkcolumn',
@@ -85,6 +87,13 @@ Ext.define('casco.view.rs.Rs', {
 		        arr.push(v.tag);
 		    });
 			return arr.join(', ');
+		}
+	}, {
+		text: "vat string",
+		dataIndex: "vatstr",
+		width: 100,
+		renderer: function(value) {
+			return value?value.name:'';
 		}
 	}, {
 		text: "result",
