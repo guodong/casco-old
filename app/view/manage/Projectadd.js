@@ -3,6 +3,8 @@ Ext.define('casco.view.manage.Projectadd', {
 
     xtype: 'widget.projectadd',
     requires: [
+               'casco.view.manage.Vatstr',
+               'casco.view.manage.Participants'
     ],
     resizable: true,
     maximizable: true,
@@ -12,11 +14,12 @@ Ext.define('casco.view.manage.Projectadd', {
     controller: 'manage',
     initComponent: function(){
     	var me = this;
-    	if(me.project == undefined){
-    		me.project = Ext.create('casco.model.Project');
-    	}
     	me.participants = Ext.create('casco.store.Users');
     	me.vatstrs = Ext.create('casco.store.Vatstrs');
+    	if(me.project){console.log(me.project.get('participants'))
+    		me.participants.setData(me.project.get('participants'));
+    		me.vatstrs.setData(me.project.get('vatstrs'));
+    	}
     	Ext.apply(me, {
     		items: [{
     	    	xtype: 'form',

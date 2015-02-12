@@ -11,7 +11,10 @@ Ext.define('casco.view.manage.Useradd', {
 	width: 300,
 	initComponent: function() {
 		var me = this;
-
+		me.projects = Ext.create('casco.store.Projects');
+		if(me.user){
+			me.projects.setData(me.user.get('projects'));
+		}
 		Ext.apply(me, {
 			
 			items: [{
@@ -49,8 +52,32 @@ Ext.define('casco.view.manage.Useradd', {
 					msgTarget: 'under',
 					xtype: 'textfield',
 					inputType: 'password',
-					allowBlank: false
-				}],
+					allowBlank: false,
+					hidden: me.user?true:false
+				}, {
+    				xtype: 'grid',
+    				region: 'center',
+    				fieldLabel: 'Joined Projects',
+//    				dockedItems: [{
+//    	    	        xtype: 'toolbar', 
+//    	    	        dock: 'bottom',
+//    	    	        items: [{
+//    	    	            glyph: 0xf067,
+//    	    	            text: 'Edit Participants',
+//    	    	            handler: function(){
+//    	    					var wd = Ext.create("casco.view.manage.Participants", {
+//    	    						participants: me.participants
+//    	    					});
+//    	    					wd.show();
+//    	    				}
+//    	    	        }]
+//    	    	    }],
+    			    columns: [
+    			        { text: 'Projects',  dataIndex: 'name', flex: 1}
+    			    ],
+    			    store: me.projects,
+					hidden: me.user?false:true
+    			}],
 				buttons: ['->', {
 					text: 'Save',
 					formBind: true,

@@ -13,10 +13,6 @@ Ext.define('casco.view.main.Top', {
             xtype: 'label',
             html: 'CASCO TEST CENTER',
             style: 'font-size: 27px;'
-        },{
-            xtype: 'label',
-            text: "CASCO TEST CENTER",
-            style: 'display:inline-block;padding-top: 1em'
         },'->',{
             text: 'Manage',
             xtype: 'button',

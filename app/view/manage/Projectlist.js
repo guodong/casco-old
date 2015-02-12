@@ -28,7 +28,7 @@ Ext.define('casco.view.manage.Projectlist', {
 	}],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.projectadd');
+        	var win = Ext.create('widget.projectadd', {project: record});
             win.down('form').loadRecord(record);
             win.show();
         }

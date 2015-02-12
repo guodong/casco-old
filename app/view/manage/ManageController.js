@@ -8,14 +8,16 @@ Ext.define('casco.view.manage.ManageController', {
     alias: 'controller.manage',
 
     createuser: function () {
+    	var view = this.getView();
     	var self = this;
     	var form = this.lookupReference('useraddform');
-    	var user = Ext.create('casco.model.User', form.getValues());
+    	var user = view.user?view.user:Ext.create('casco.model.User');
+    	user.set(form.getValues());
     	user.save({
     		callback: function(){
-    			Ext.Msg.alert('Message', 'User created successfully.', function(){
+    			Ext.Msg.alert('Message', 'User manage successfully.', function(){
     				var t = Ext.ComponentQuery.query("#tab-userlist")[0];
-    				t.store.reload();
+    				if(!view.user)t.store.add(user);
     				form.up("window").destroy();
 		    	});
     		}
@@ -23,7 +25,7 @@ Ext.define('casco.view.manage.ManageController', {
     },
     createProject : function() {
 		var view = this.getView();
-		var project = view.project;
+		var project = view.project?view.project:Ext.create('casco.model.Project');
 		var form = view.down('form');
 		var data = form.getValues(); //提交的数据
 		data.document_id = view.document_id;

@@ -37,10 +37,14 @@ Ext.define('casco.view.manage.Userlist', {
 		text: "jobnumber",
 		dataIndex: "jobnumber",
 		width: 130
-	}],
+	}, {
+		text: "created time",
+		dataIndex: "created_at",
+		width: 180
+	}	],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.useradd');
+        	var win = Ext.create('widget.useradd', {user: record});
             win.down('form').loadRecord(record);
             win.show();
         }
