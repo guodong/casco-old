@@ -18,7 +18,7 @@ Ext.define('casco.view.rs.RsDetail', {
 		if(me.rs){
 			me.vat.setData(me.rs.get('vat'));
 		}
-		me.vatstrstore = Ext.create('casco.store.Vatstr');
+		me.vatstrstore = Ext.create('casco.store.Vatstrs');
 		me.vatstrstore.load({
     		params: {project_id: localStorage.project_id}
     	});
@@ -134,7 +134,8 @@ Ext.define('casco.view.rs.RsDetail', {
     	    	            text: 'Edit Vat',
     	    	            handler: function(){
     	    					var wd = Ext.create("casco.view.rs.vat.Add", {
-    	    						vat: me.vat
+    	    						vat: me.vat,
+    	    						document_id: me.document_id
     	    					});
     	    					wd.show();
     	    				}

@@ -17,8 +17,8 @@ Ext.define("casco.view.auth.Login",{
         reference: 'form',
         items: [{
             xtype: 'textfield',
-            name: 'username',
-            fieldLabel: 'Username',
+            name: 'account',
+            fieldLabel: 'Account',
             allowBlank: false
         }, {
             xtype: 'textfield',

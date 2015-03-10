@@ -2,7 +2,7 @@ Ext.define('casco.view.manage.Participants', {
 	extend: 'Ext.window.Window',
 
 	alias: 'widget.participants',
-	requires: [],
+	requires: ['Ext.grid.plugin.CellEditing'],
 	resizable: true,
 	maximizable: true,
 	modal: true,
@@ -44,8 +44,37 @@ Ext.define('casco.view.manage.Participants', {
 			region: 'center',
 			itemId: 'sources',
 			title: 'Selected Users',
+			id: 'selectedusers',
+			plugins: [Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})],
 		    columns: [
 				        { text: 'realname',  dataIndex: 'realname', flex: 1},
+				        {
+				            //xtype: 'gridcolumn',
+				            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+				                console.log(value)
+				            },
+				            text: 'Role',
+				            dataIndex: 'role',
+				            editor: {
+				                xtype: 'combo',
+				                displayField: 'text',
+				                valueField: 'value',
+				                store: Ext.create('Ext.data.Store', {
+									fields : [ 'text', 'value' ],
+									data : [ {
+										"text" : "EP",
+										"value" : "EP"
+									}, {
+										"text" : "EG",
+										"value" : "EG"
+									} ]
+								}),
+								listeners: {
+							        change: function (filed, newValue, oldValue, op) {console.log(arguments)
+							        }
+								}
+				            }
+				        }
 		    ],
 		    store: me.participants,
 		    listeners : {
@@ -69,5 +98,6 @@ Ext.define('casco.view.manage.Participants', {
 		}];
 		
 		me.callParent(arguments);
+		//this.getSelectionModel().on('selectionchange', function(){}, this);
 	}
 });

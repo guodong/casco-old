@@ -9,6 +9,12 @@ Ext.define('casco.view.main.Top', {
     style: {background: '#3892d3',padding: '10px',color: '#fff'},
     initComponent: function(){
     	var me = this;
+    	var store = Ext.create('casco.store.Projects');
+    	store.load({
+    		params:{
+    			user_id: localStorage.uid
+    		}
+    	})
     	this.items = [{
             xtype: 'label',
             html: 'CASCO TEST CENTER',

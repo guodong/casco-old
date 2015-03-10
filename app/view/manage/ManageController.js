@@ -6,7 +6,17 @@ Ext.define('casco.view.manage.ManageController', {
     ],
 
     alias: 'controller.manage',
+    onLogout: function () {
+        Ext.Msg.confirm('Confirm', 'Are you sure to logout?', function (choice) {
+            if (choice === 'yes') {
+                localStorage.removeItem('uid');
 
+                this.getView().destroy();
+
+                Ext.widget('login');
+            }
+        }, this);
+    },
     createuser: function () {
     	var view = this.getView();
     	var self = this;
