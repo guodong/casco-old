@@ -14,7 +14,8 @@ Ext.define('casco.view.main.Top', {
     		params:{
     			user_id: localStorage.uid
     		}
-    	})
+    	});
+    	var user = JSON.parse(localStorage.user);
     	this.items = [{
             xtype: 'label',
             html: 'CASCO TEST CENTER',
@@ -26,11 +27,13 @@ Ext.define('casco.view.main.Top', {
             	localStorage.view = 'manage';
             	location.reload();
             }
-        },{
-            text: 'Testing',
-            xtype: 'button',
-            handler: 'testing'
-        },{
+        }
+//        ,{
+//            text: 'Testing',
+//            xtype: 'button',
+//            handler: 'testing'
+//        }
+        ,{
             xtype: 'combobox',
             editable: false,
             displayField: 'name',
@@ -49,10 +52,12 @@ Ext.define('casco.view.main.Top', {
             	}
             }
         },{
-            text: 'User',
+            text: user.realname,
             glyph: 0xf007,
             menu: [{
                 text: 'Account'
+            },{
+                text: 'Change Password'
             },{
                 text: 'Logout',
                 handler: 'onLogout'

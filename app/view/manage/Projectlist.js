@@ -11,7 +11,7 @@ Ext.define('casco.view.manage.Projectlist', {
 			text: 'Create Project',
 			glyph: 0xf067,
 			handler: function() {
-				var win = Ext.create('widget.projectadd', {store: store});
+				var win = Ext.create('casco.view.manage.Projectadd', {store: store});
 				win.show();
 			}
 		}];
@@ -21,6 +21,21 @@ Ext.define('casco.view.manage.Projectlist', {
 		text: "name",
 		dataIndex: "name",
 		width: 130
+	},{
+		text: "description",
+		dataIndex: "description",
+		width: 130
+	},{
+		text: "participants",
+		dataIndex: "participants",
+		width: 130,
+		renderer: function(ps){
+			var users = [];
+			for(var i in ps){
+				users.push(ps[i].realname)
+			}
+			return users.join(',');
+		}
 	}, {
 		text: "created time",
 		dataIndex: "created_at",
@@ -28,7 +43,7 @@ Ext.define('casco.view.manage.Projectlist', {
 	}],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.projectadd', {project: record});
+        	var win = Ext.create('casco.view.manage.Projectadd', {project: record});
             win.down('form').loadRecord(record);
             win.show();
         }

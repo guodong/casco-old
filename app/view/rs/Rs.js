@@ -23,7 +23,7 @@ Ext.define('casco.view.rs.Rs', {
 					listeners: {
 						scope: this
 					},
-					doc_id: me.document_id
+					document_id: me.document_id
 				});
 				win.show();
 			}
@@ -41,6 +41,17 @@ Ext.define('casco.view.rs.Rs', {
 		};
 		me.callParent(arguments);
 	},
+    viewConfig: { 
+        stripeRows: false, 
+        getRowClass: function(record) {
+        	if(record.get('tcs').length != 0)
+        		return ''; 
+        	if(record.get('tcs').length == 0 && record.get('vat').length == 0 && !record.get('vatstr'))
+        		return 'red'; 
+        	if(record.get('vat').length != 0 || record.get('vatstr'))
+        		return 'yellow'; 
+        } 
+    },
 	columns: [{
 		xtype: 'checkcolumn',
 		header: '',

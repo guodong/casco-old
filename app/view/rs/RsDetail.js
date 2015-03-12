@@ -114,11 +114,9 @@ Ext.define('casco.view.rs.RsDetail', {
     	        },{
     	            fieldLabel: 'vat string',
     	            xtype: 'combobox',
-    	            queryMode: 'local',
     	            displayField: 'name',
     	            valueField: 'id',
     	            id: 'vatstr_id',
-    	            editable: true,
         	    	width: '100%',
     	            name: 'vatstr_id',
     	            store: me.vatstrstore,

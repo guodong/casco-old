@@ -44,23 +44,14 @@ Ext.define('casco.view.tc.TcAdd', {
 	            allowBlank: false
 			}, {
 				xtype : 'combobox',
-				name : 'test_method',
+				name : 'testmethod_id',
 				anchor : '100%',
 				editable : false,
 				fieldLabel : 'Test Methods',
 				//labelAlign : 'top',
-				displayField : 'text',
-				valueField : 'value',
-				store : Ext.create('Ext.data.Store', {
-					fields : [ 'text', 'value' ],
-					data : [ {
-						"text" : "EP",
-						"value" : "EP"
-					}, {
-						"text" : "EG",
-						"value" : "EG"
-					} ]
-				}),
+				displayField : 'name',
+				valueField : 'id',
+				store : Ext.create('casco.store.Testmethods'),
 	            allowBlank: false
 			},{
 				anchor : '100%',

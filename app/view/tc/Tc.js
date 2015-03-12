@@ -70,7 +70,7 @@ Ext.define('casco.view.tc.Tc', {
 		    });
 			return arr.join(', ');
 		}},
-        {text: "test method", dataIndex: "test_method", width: 100},
+        {text: "test method", dataIndex: "testmethod", width: 100, renderer: function(tm){return tm?tm.name:''}},
         {text: "pre condition", dataIndex: "pre_condition", flex: 1},
         {text: "result", dataIndex: "result", width: 100, renderer : function(value) {
 			switch(value){

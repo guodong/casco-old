@@ -13,7 +13,7 @@ Ext.define('casco.view.manage.Userlist', {
 			text: 'Add User',
 			glyph: 0xf067,
 			handler: function() {
-				var win = Ext.create('widget.useradd', {store: store});
+				var win = Ext.create('casco.view.manage.Useradd', {store: store});
 				win.show();
 			}
 		}, {
@@ -44,7 +44,7 @@ Ext.define('casco.view.manage.Userlist', {
 	}	],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
-        	var win = Ext.create('widget.useradd', {user: record});
+        	var win = Ext.create('casco.view.manage.Useradd', {user: record});
             win.down('form').loadRecord(record);
             win.show();
         }

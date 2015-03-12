@@ -33,6 +33,22 @@ Ext.define('casco.view.manage.ManageController', {
     		}
     	});
     },
+    createmethod: function () {
+    	var view = this.getView();
+    	var self = this;
+    	var form = this.lookupReference('methodaddform');
+    	var method = view.method?view.method:Ext.create('casco.model.Testmethod');
+    	method.set(form.getValues());
+    	method.save({
+    		callback: function(){
+    			Ext.Msg.alert('Message', 'Method manage successfully.', function(){
+    				var t = Ext.ComponentQuery.query("#tab-testmethod")[0];
+    				if(!view.method)t.store.add(method);
+    				form.up("window").destroy();
+		    	});
+    		}
+    	});
+    },
     createProject : function() {
 		var view = this.getView();
 		var project = view.project?view.project:Ext.create('casco.model.Project');
@@ -41,13 +57,14 @@ Ext.define('casco.view.manage.ManageController', {
 		data.document_id = view.document_id;
 		data.vatstrs = [];
 		view.vatstrs.each(function(s){
-			data.vatstrs.push({ 
+			data.vatstrs.push({
+				id: s.data.id,
 				name: s.data.name
 			});
 		});
-		data.participates = [];
+		data.participants = [];
 		view.participants.each(function(s){
-			data.participates.push(s.getData());
+			data.participants.push(s.getData());
 		});
 		project.set(data);
 		project.save({

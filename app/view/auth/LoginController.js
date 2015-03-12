@@ -13,8 +13,9 @@ Ext.define('casco.view.auth.LoginController', {
     		success: function(record){
     			if(record.get('error')){
     				Ext.Msg.alert('Error', 'Authentication failure.');
-    			}else{
+    			}else{console.log(record)
     		        localStorage.setItem("uid", record.get('id'));
+    		        localStorage.setItem("user", JSON.stringify(record.data));
 
     		        me.getView().destroy();
 

@@ -22,9 +22,6 @@ Ext.define('casco.Application', {
 			return;
 		}
 		uid = localStorage.getItem("uid");
-		if(localStorage.view == 'manage'){
-			
-		}
 		
 		Ext.widget(uid ? ((localStorage.view == 'manage')?'manage':'app-main') :'login');
     }

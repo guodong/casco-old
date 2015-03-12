@@ -1,6 +1,9 @@
 Ext.define('casco.view.manage.Manage', {
 	extend: 'Ext.container.Viewport',
-	requires: ['casco.view.main.Top', 'casco.view.manage.ManageController', 'casco.view.manage.Projectlist', 'casco.store.Users'],
+	requires: ['casco.view.main.Top', 'casco.view.manage.ManageController',
+			'casco.view.manage.Projectlist', 'casco.store.Users',
+			'casco.view.manage.Testmethod', 'casco.view.manage.Methodadd',
+			'casco.view.manage.Projectadd', 'casco.view.manage.Useradd'],
 
 	xtype: 'manage',
 
@@ -36,14 +39,21 @@ Ext.define('casco.view.manage.Manage', {
 							leaf: true,
 							id: 'userlist'
 						}]
-					},{
+					}, {
 						text: "Project Management",
 						children: [{
 							text: "Project List",
 							leaf: true,
 							id: 'projectlist'
 						}]
-					}, ]
+					}, {
+						text: "System Management",
+						children: [{
+							text: "Test Method",
+							leaf: true,
+							id: 'testmethod'
+						}]
+					}]
 				}
 			})
 		}, {
