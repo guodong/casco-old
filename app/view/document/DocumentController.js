@@ -8,7 +8,21 @@ Ext.define('casco.view.document.DocumentController', {
 		if (pjt.get('id')) {
 			pjt.set('id', 0);
 		}
-		pjt.set('project_id', localStorage.getItem("project_id"));
+		var regex;
+		if(form.getValues().type == 'rs'){
+			var v = form.getValues();
+			regex = {
+				tag: v.rstag,
+				description: v.rsdescription,
+				implement: v.rsimplement,
+				priority: v.rspriority,
+				contribution: v.rscontribution,
+				category: v.rscategory,
+				allocation: v.rsallocation
+			}
+		}
+		//pjt.set('regex', JSON.stringify(regex));
+		
 		pjt.save({
 			callback: function(){
 				var t = Ext.ComponentQuery.query("#mtree")[0];
@@ -24,7 +38,6 @@ Ext.define('casco.view.document.DocumentController', {
 		if (pjt.get('id')) {
 			pjt.set('id', 0);
 		}
-		pjt.set('project_id', localStorage.getItem("project_id"));
 		pjt.save({
 			callback: function(){
 				var t = Ext.ComponentQuery.query("#mtree")[0];

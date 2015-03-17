@@ -3,7 +3,7 @@ Ext.define('casco.view.manage.Manage', {
 	requires: ['casco.view.main.Top', 'casco.view.manage.ManageController',
 			'casco.view.manage.Projectlist', 'casco.store.Users',
 			'casco.view.manage.Testmethod', 'casco.view.manage.Methodadd',
-			'casco.view.manage.Projectadd', 'casco.view.manage.Useradd'],
+			'casco.view.manage.Projectadd', 'casco.view.manage.Useradd','casco.view.manage.Document'],
 
 	xtype: 'manage',
 

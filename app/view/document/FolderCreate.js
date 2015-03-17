@@ -36,7 +36,7 @@ Ext.define('casco.view.document.FolderCreate', {
 	            xtype: 'hiddenfield'
 	        },{
 	            name: 'project_id',
-	            value: localStorage.getItem("project_id"),
+	            value: me.project.id,
 	            xtype: 'hiddenfield'
 	        }]
 	    }];

@@ -16,6 +16,13 @@ Ext.define('casco.view.rs.RsImport', {
         	xtype: 'form',
             bodyPadding: 10,
         	items: [{
+				fieldLabel: 'Version',
+				msgTarget: 'side',
+				name: 'version',
+    	        labelWidth: 50,
+    	        width: '100%',
+				xtype: 'textfield'
+			},{
     	        xtype: 'filefield',
     	        name: 'file',
     	        fieldLabel: 'File',

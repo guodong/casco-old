@@ -40,7 +40,24 @@ Ext.define('casco.view.manage.Projectlist', {
 		text: "created time",
 		dataIndex: "created_at",
 		width: 180
-	}],
+	},{
+		width: 130,
+        renderer: function(val,meta,rec) {
+            var id = Ext.id();
+            Ext.defer(function() {
+               Ext.widget('button', {
+                  renderTo: id,
+                  text: 'Edit Documents',
+                  scale: 'small',
+                  handler: function() {
+                	  var win = Ext.create('casco.view.manage.Document', {project: rec});
+                      win.show();
+                  }
+               });
+            }, 50);
+            return Ext.String.format('<div id="{0}"></div>', id);
+         }
+      }],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
         	var win = Ext.create('casco.view.manage.Projectadd', {project: record});

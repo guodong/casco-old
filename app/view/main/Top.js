@@ -28,11 +28,11 @@ Ext.define('casco.view.main.Top', {
             	location.reload();
             }
         }
-//        ,{
-//            text: 'Testing',
-//            xtype: 'button',
-//            handler: 'testing'
-//        }
+        ,{
+            text: 'Testing',
+            xtype: 'button',
+            handler: 'testing'
+        }
         ,{
             xtype: 'combobox',
             editable: false,
