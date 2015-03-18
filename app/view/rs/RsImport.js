@@ -6,7 +6,7 @@ Ext.define('casco.view.rs.RsImport', {
     ],
 
     modal: true,
-    title: 'Rs Import',
+    title: 'Document Import',
     width: 400,
     frame: true,
     id: 'import-window',
@@ -35,7 +35,12 @@ Ext.define('casco.view.rs.RsImport', {
     	    },{
     	        xtype: 'hiddenfield',
     	        name: 'document_id',
-    	        value: me.doc_id,
+    	        value: me.document_id,
+    	        allowBlank: false,
+    	    },{
+    	        xtype: 'hiddenfield',
+    	        name: 'type',
+    	        value: me.type,
     	        allowBlank: false,
     	    }],
     	

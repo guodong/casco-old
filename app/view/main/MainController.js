@@ -36,7 +36,6 @@ Ext.define('casco.view.main.MainController', {
     	if(!json.leaf) return;
 		var tabs = this.lookupReference('main');
 		var tab = tabs.child('#tab-' + json.id);
-		localStorage.setItem("doc_id", json.id);
 		if(!tab){
 			var type = json.type;
 			tab = tabs.add({

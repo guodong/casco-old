@@ -21,6 +21,12 @@ Ext.define('casco.view.tc.TcAdd', {
 			me.sources.setData(me.tc.get('sources'));
 			me.steps.setData(me.tc.get('steps'));
 		}
+		var tm = Ext.create('casco.store.Testmethods');
+		tm.load({
+			params: {
+				project_id: localStorage.project_id
+			}
+		});
 		me.items = [{
 			xtype: 'form',
 			reference: 'TcAddform',
@@ -51,7 +57,7 @@ Ext.define('casco.view.tc.TcAdd', {
 				//labelAlign : 'top',
 				displayField : 'name',
 				valueField : 'id',
-				store : Ext.create('casco.store.Testmethods'),
+				store : tm,
 	            allowBlank: false
 			},{
 				anchor : '100%',

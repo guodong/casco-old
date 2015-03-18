@@ -14,7 +14,21 @@ Ext.define('casco.view.tc.Tc', {
     	});
     	me.store = st;
     	
-        me.tbar = [
+        me.tbar = [{
+			text: 'Import Document',
+			glyph: 0xf093,
+			scope: this,
+			handler: function() {
+				var win = Ext.create('widget.rs.rsimport', {
+					listeners: {
+						scope: this
+					},
+					document_id: me.document_id,
+					type: 'tc',
+				});
+				win.show();
+			}
+		},
         {
             text: 'Add Item',
             glyph: 0xf067, 

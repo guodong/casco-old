@@ -23,7 +23,8 @@ Ext.define('casco.view.rs.Rs', {
 					listeners: {
 						scope: this
 					},
-					document_id: me.document_id
+					document_id: me.document_id,
+					type: 'rs'
 				});
 				win.show();
 			}
