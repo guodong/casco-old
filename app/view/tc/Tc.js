@@ -15,21 +15,6 @@ Ext.define('casco.view.tc.Tc', {
     	me.store = st;
     	
         me.tbar = [{
-			text: 'Import Document',
-			glyph: 0xf093,
-			scope: this,
-			handler: function() {
-				var win = Ext.create('widget.rs.rsimport', {
-					listeners: {
-						scope: this
-					},
-					document_id: me.document_id,
-					type: 'tc',
-				});
-				win.show();
-			}
-		},
-        {
             text: 'Add Item',
             glyph: 0xf067, 
             handler : function() {
@@ -43,6 +28,20 @@ Ext.define('casco.view.tc.Tc', {
 
             }
         },{
+			text: 'Import Document',
+			glyph: 0xf093,
+			scope: this,
+			handler: function() {
+				var win = Ext.create('widget.rs.rsimport', {
+					listeners: {
+						scope: this
+					},
+					document_id: me.document_id,
+					type: 'tc',
+				});
+				win.show();
+			}
+		},{
             text: 'Export Document',
             glyph: 0xf019,
             handler : function() {
@@ -61,9 +60,28 @@ Ext.define('casco.view.tc.Tc', {
         			}
         		});
             }
-        }];
+        },{
+			text: 'View Document',
+			glyph: 0xf108,
+			scope: this,
+			handler: function() {
+				window.open("/viewdoc.html?file="+me.document.filename,"_blank","width=800,height=900");
+			}
+		},{
+			text: 'View Graph',
+			glyph: 0xf0e8,
+			scope: this,
+			handler: function() {
+				window.open('/draw/graph.html?document_id='+me.document_id);
+			},
+			hidden: true
+		}];
     	me.callParent(arguments);
     },
+    features: [{
+    	ftype: 'summary',
+    	dock: 'top'
+    }],
     columns: [
 //        {
 //            xtype: 'checkcolumn',
@@ -76,7 +94,11 @@ Ext.define('casco.view.tc.Tc', {
 //            }
 //        },
         //{text: "#", dataIndex: "id", width: 50, hideable: false},
-        {text: "tag", dataIndex: "tag", width: 150, hideable: false},
+        {text: "tag", dataIndex: "tag", width: 200, hideable: false,
+            summaryType: 'count',
+            summaryRenderer: function(value, summaryData, dataIndex) {
+                return Ext.String.format('{0} item{1}', value, value !== 1 ? 's' : '');
+            }},
         {text: "sources", dataIndex: "sources", width: 200, autoShow: false, renderer : function(value) {
 			var arr = [];
 			Ext.Array.each(value, function(v) {
@@ -98,7 +120,11 @@ Ext.define('casco.view.tc.Tc', {
 		}}
     ],
     listeners : {
-        itemdblclick: function(dv, record, item, index, e) {
+        celldblclick: function(a,b,c, record, item, index, e) {
+        	if(c==0){
+				window.open('/draw/graph2.html#'+record.get('tag'));
+				return;
+			}
         	var win = Ext.create('widget.tcadd',{tc: record, document_id: this.document_id});
             win.down('form').loadRecord(record);
             win.show();

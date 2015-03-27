@@ -120,7 +120,8 @@ Ext.define('casco.view.rs.RsDetail', {
         	    	width: '100%',
     	            name: 'vatstr_id',
     	            store: me.vatstrstore,
-    	            editable: false
+    	            editable: false,
+    	            queryMode: 'local'
     	        }, {
     				xtype: 'grid',
     				fieldLabel: 'Vat',

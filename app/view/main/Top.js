@@ -32,6 +32,12 @@ Ext.define('casco.view.main.Top', {
             text: 'Testing',
             xtype: 'button',
             handler: 'testing'
+        },{
+            text: 'Relation view',
+            xtype: 'button',
+            handler: function(){
+            	window.open('/draw/graph2.html');
+            }
         }
         ,{
             xtype: 'combobox',

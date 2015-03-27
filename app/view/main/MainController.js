@@ -36,7 +36,10 @@ Ext.define('casco.view.main.MainController', {
     	if(!json.leaf) return;
 		var tabs = this.lookupReference('main');
 		var tab = tabs.child('#tab-' + json.id);
-		if(!tab){
+		if(tab){
+			tabs.remove(tab);
+		}
+		//if(!tab){
 			var type = json.type;
 			tab = tabs.add({
 				itemId: 'tab-' + json.id,
@@ -44,13 +47,17 @@ Ext.define('casco.view.main.MainController', {
 				xtype: type,
 				title: json.name,
 				document_id: json.id,
+				document: json,
 				closable: true
 			});
-		}
+		//}
 
 		tabs.setActiveTab(tab);
 	},
 	testing: function(){
+//		var win = Ext.create('casco.view.testing.Config');
+//		win.show();
+//		return;
 		var tabs = this.lookupReference('main');
 		var tab = tabs.child('#tab-testing');
 		if(!tab){

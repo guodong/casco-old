@@ -151,6 +151,6 @@ Ext.define('casco.view.document.Create', {
 		me.callParent(arguments);
 	},
 	doHide: function() {
-		this.hide();
+		this.destroy();
 	}
 });
