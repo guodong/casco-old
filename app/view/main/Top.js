@@ -26,12 +26,21 @@ Ext.define('casco.view.main.Top', {
             handler: function(){
             	localStorage.view = 'manage';
             	location.reload();
-            }
+            },
+            hidden: localStorage.view == 'manage'?true:false
         }
         ,{
             text: 'Testing',
             xtype: 'button',
-            handler: 'testing'
+            handler: 'testing',
+            hidden: localStorage.view == 'manage'?true:false
+        },{
+            text: 'Project Stat',
+            xtype: 'button',
+            handler: function(){
+            	window.open("/prostat/projectstat-tmp.htm");
+            },
+            hidden: localStorage.view == 'manage'?false:true
         },{
             text: 'Relation view',
             xtype: 'button',
@@ -44,7 +53,8 @@ Ext.define('casco.view.main.Top', {
             editable: false,
             displayField: 'name',
             valueField: 'id',
-            store: Ext.create('casco.store.Projects'),
+            store: store,
+            queryMode: 'local',
             emptyText: 'Switch Project',
             //value: localStorage.project_id,
             listeners: {

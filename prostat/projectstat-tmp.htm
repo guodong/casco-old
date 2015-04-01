@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>工程概览</title>
+<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="js/highcharts.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+</head>
+
+<body>
+	<div style="margin: 0 auto; text-align: center;">
+		<p>
+			<b>项目Items数目随时间变化情况</b> <br /> <br /> <label for="from">from</label>
+			<input type="text" id="from" name="from"> <label for="to">to</label>
+			<input type="text" id="to" name="to">
+		</p>
+		<div id="container"></div>
+	</div>
+
+
+	<script>
+		var API = 'http://api.casco.me/';
+		//var API = '192.100.212.31:8080/';
+		var format = function(newDate) {
+			return new Date(newDate).getTime();
+		}
+		function timeConverter(UNIX_timestamp){
+			  var a = new Date(UNIX_timestamp*1000);
+			  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+			  var year = a.getFullYear();
+			  var month = months[a.getMonth()];
+			  var date = a.getDate();
+			  var hour = a.getHours();
+			  var min = a.getMinutes();
+			  var sec = a.getSeconds();
+			  var time = date + ',' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+			  return time;
+			}
+
+		function draw(from, to, step) {
+
+			$.ajax({
+				type: 'get',
+				url: API + 'stat/count',
+				data: {
+					from: from/1000,
+					to: to/1000,
+					step: step
+				},
+				dataType: "json",
+				async: true,
+				success: function(data) {
+
+					var pronum = 0;
+					var names = [];
+					var cats = [];
+					var datas = [];
+					//var i=0;
+					$.each(data, function(i, item) {
+						var _d = {
+							name: item.name,
+							data: []
+						};
+						$.each(item.stat, function(j, stat) {
+							_d.data.push(stat.number)
+						});
+						datas.push(_d);
+					});
+					$.each(data[0].stat, function(k, stat) {
+						cats.push(timeConverter(stat.time));
+					});
+					console.log(datas)
+					makeChart(cats, datas);
+					return;
+				}
+			});
+		}
+		//日期选择
+		$("#from").datepicker({
+			defaultDate: "+1w",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onClose: function(selectedDate) {
+				$("#to").datepicker("option", "minDate", selectedDate);
+			},
+		});
+		$("#to").datepicker({
+			defaultDate: "",
+			changeMonth: true,
+			numberOfMonths: 1,
+			onClose: function(selectedDate) {
+				$("#from").datepicker("option", "maxDate", selectedDate);
+			}
+		});
+
+		$("#to").on(
+				'change',
+				function() {
+					draw(
+							format($("#from").val()),
+							format(
+							$("#to").val()), 3600 * 24);
+				})
+		var makeChart = function(cats, datas) {
+			var chart = new Highcharts.Chart({
+				chart: {
+					renderTo: 'container',
+					type: 'line'
+				},
+				title: {
+					text: '',
+				},
+				xAxis: {
+					title: {
+						text: "日期"
+					},
+					categories: cats
+				},
+				yAxis: {
+					title: {
+						text: 'Items数量 (条)'
+					},
+					plotLines: [{
+						value: 0,
+						width: 1,
+						color: '#808080'
+					}]
+				},
+				tooltip: {
+					valueSuffix: '个'
+				},
+				legend: {
+					layout: 'vertical',
+					align: 'right',
+					verticalAlign: 'middle',
+					borderWidth: 0
+				},
+				series: datas
+			});
+		}
+
+		var name = [];
+		var data = [];
+		var cats = [];
+
+
+		//chart1 = new Highcharts.Chart(coverstate1);
+		//chart2 = new Highcharts.Chart(coverstate2);
+	</script>
+</body>
+</html>

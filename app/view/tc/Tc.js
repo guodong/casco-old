@@ -65,7 +65,7 @@ Ext.define('casco.view.tc.Tc', {
 			glyph: 0xf108,
 			scope: this,
 			handler: function() {
-				window.open("/viewdoc.html?file="+me.document.filename,"_blank","width=800,height=900");
+				window.open("/viewdoc.html?file="+me.document_id,"_blank","width=800,height=900");
 			}
 		},{
 			text: 'View Graph',

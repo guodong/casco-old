@@ -11,7 +11,8 @@ Ext.define('casco.view.main.MainController', {
     requires: [
         'Ext.window.MessageBox',
         'casco.view.tc.Tc',
-        'casco.view.rs.Rs'
+        'casco.view.rs.Rs',
+        'casco.view.testing.Test'
     ],
 
     alias: 'controller.main',

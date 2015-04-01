@@ -13,7 +13,8 @@ Ext.define('casco.view.main.Main', {
         'casco.view.main.Top',
         'casco.view.project.Project',
         'casco.view.main.Tree',
-        'casco.store.TcSteps'
+        'casco.store.TcSteps',
+        'casco.view.testing.Test'
     ],
 
     xtype: 'app-main',

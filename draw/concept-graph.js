@@ -19,14 +19,17 @@ var CollapsibleTree = function(elt) {
 
   var childdiagonal = d3.svg.diagonal()
       .projection(function(d) { return [d.x, d.y]; });
-
-  var vis = d3.select(elt).append("svg:svg")
+  var zoom = d3.behavior.zoom().scaleExtent([0.1, 10]).on("zoom",
+			zoomed);
+	  var v = d3.select(elt).append("svg:svg")
       .attr("width", w + m[1] + m[3])
-      .attr("height", h + m[0] + m[2])
-      .append("svg:g")
-      // .attr("transform", "translate(" + m[3] + "," + m[0] + ")"); // left-right
-      // .attr("transform", "translate(" + m[0] + "," + m[3] + ")"); // top-bottom
-      .attr("transform", "translate(0,"+h/2+")"); // bidirectional-tree
+      .attr("height", h + m[0] + m[2]).call(zoom);
+	  var vv = v.append('g').attr("transform", "translate(0,"+h/2+")");
+      var vis = vv.append("svg:g"); // bidirectional-tree
+	  function zoomed() {
+			vis.attr("transform", "translate(" + d3.event.translate
+					+ ")scale(" + d3.event.scale + ")");
+		}
 
 
   var that = {
@@ -56,7 +59,7 @@ var CollapsibleTree = function(elt) {
       var duration = d3.event && d3.event.altKey ? 5000 : 500;
 
       // Compute the new tree layout.
-      var nodes = tree.nodes(root).reverse();
+      var nodes = tree.nodes(root).reverse();console.log(nodes)
 
       // Normalize for fixed-depth.
       nodes.forEach(function(d) { d.y = d.depth * 120; });

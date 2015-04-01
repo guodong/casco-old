@@ -50,6 +50,13 @@ Ext.define('casco.view.rs.Rs', {
 				window.open('/draw/graph.html?document_id='+me.document_id);
 			},
 			hidden: true
+		},{
+			text: 'View Statistics',
+			glyph: 0xf080,
+			scope: this,
+			handler: function() {
+				window.open('/stat/cover.htm#'+me.document_id);
+			}
 		}];
 		me.listeners = {
 			celldblclick: function(a,b,c,record){
@@ -60,6 +67,8 @@ Ext.define('casco.view.rs.Rs', {
 				if(c==5||c==6){
 					var st = Ext.create('casco.store.Vat');
 					st.setData(record.get('vat'));
+					if(record.get('vatstr'))
+						st.add({id: record.get('vatstr').id, tag: record.get('vatstr').name});
 					var wd = Ext.create("casco.view.rs.vat.Add", {
 						vat: st,
 						document_id: me.document_id
