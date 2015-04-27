@@ -2,7 +2,7 @@ var cvd = 0;
 Ext.define('casco.view.rs.Rs', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.rs',
-	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail'],
+	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail','casco.store.Versions'],
 	autoHeight: true,
 	allowDeselect: false,
 	viewModel: 'main',
@@ -21,7 +21,11 @@ Ext.define('casco.view.rs.Rs', {
 				cvd++;
 			}
 		});
+		var latest_v = me.document.get('versions').length==0?'':me.document.get('versions')[0].name;
 		me.tbar = [{
+			xtype: 'label',
+			text: 'version: '+latest_v
+		},{
 			text: 'Import Document',
 			glyph: 0xf093,
 			scope: this,
@@ -138,7 +142,7 @@ Ext.define('casco.view.rs.Rs', {
 			renderer: function(value) {
 				return value?value.name:'';
 			}
-		}, {
+		}/*, {
 			text: "result",
 			dataIndex: "result",
 			width: 70,
@@ -152,7 +156,7 @@ Ext.define('casco.view.rs.Rs', {
 					return '<span style="color:red">failed</span>';
 				}
 			}
-		}];
+		}*/];
 		me.callParent(arguments);
 	},
     viewConfig: { 

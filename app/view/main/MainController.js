@@ -40,20 +40,22 @@ Ext.define('casco.view.main.MainController', {
 		if(tab){
 			tabs.remove(tab);
 		}
-		//if(!tab){
-			var type = json.type;
-			tab = tabs.add({
-				itemId: 'tab-' + json.id,
-				id: 'tab-'+json.id,
-				xtype: type,
-				title: json.name,
-				document_id: json.id,
-				document: json,
-				closable: true
-			});
-		//}
+		var document = casco.model.Document;
+		casco.model.Document.load(json.id, {
+			success: function(record){
+				tab = tabs.add({
+					itemId: 'tab-' + json.id,
+					id: 'tab-'+json.id,
+					xtype: json.type,
+					title: json.name,
+					document_id: record.get('id'),
+					document: record,
+					closable: true
+				});
+				tabs.setActiveTab(tab);
+			}
+		});
 
-		tabs.setActiveTab(tab);
 	},
 	testing: function(){
 //		var win = Ext.create('casco.view.testing.Config');

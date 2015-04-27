@@ -67,7 +67,7 @@ Ext.define('casco.view.tc.TcAdd', {
 				xtype : 'textarea',
 				maxHeight: 50,
 	            allowBlank: false
-			}, {
+			}/*, {
 				xtype : 'combobox',
 				name : 'result',
 				anchor : '100%',
@@ -91,7 +91,7 @@ Ext.define('casco.view.tc.TcAdd', {
 					} ]
 				}),
 	            allowBlank: false
-			}, {
+			}*/, {
 				xtype: 'grid',
 				region: 'center',
 				fieldLabel: 'Sources',

@@ -1,7 +1,7 @@
 Ext.define('casco.view.testing.Test', {
 	extend: 'Ext.form.Panel',
 	alias: 'widget.test',
-	requires: ['casco.store.Tcs','casco.store.Documents','casco.store.Builds','Ext.layout.container.Column'],
+	requires: ['casco.store.Tcs','casco.store.Documents','casco.store.Builds','Ext.layout.container.Column', 'casco.store.Versions'],
 
 	bodyPadding: '10',
 	width: '100%',
@@ -22,6 +22,25 @@ Ext.define('casco.view.testing.Test', {
 			}
 		});
 		//var builds = Ext.create('casco.store')
+		me.loadgrid = function(){
+			var tc_v_id = Ext.getCmp('test-tc-version').getValue();
+			var rs_v_id = Ext.getCmp('test-rs-version').getValue();
+			var build_v_id = Ext.getCmp('test-build-version').getValue();
+			if(tc_v_id && rs_v_id && build_v_id){
+				var store = Ext.create('casco.store.Tcs');
+				store.load({
+					params: {
+						version_id: tc_v_id,
+						rs_version_id: rs_v_id,
+						build_id: build_v_id
+					},
+					callback: function(){
+						me.down('grid').reconfigure(store);
+					}
+				});
+			}
+				
+		};
 		me.items = [{
 			layout: 'column',
 			items: [{
@@ -29,11 +48,18 @@ Ext.define('casco.view.testing.Test', {
                 //layout:"form", 
                 items:[{
     				fieldLabel: 'Build Version',
+    				id: 'test-build-version',
     				name: 'build_id',
     				xtype: 'combobox',
     				editable: false,
     				displayField: 'version',
-    				store: Ext.create('casco.store.Builds')
+    				valueField: 'id',
+    				store: Ext.create('casco.store.Builds'),
+    				listeners: {
+    					select: function(f, r, i){
+    						me.loadgrid();
+    					}
+    				}
     			}] 
 			}]
 		},{
@@ -53,13 +79,13 @@ Ext.define('casco.view.testing.Test', {
     				queryMode: 'local',
     				listeners: {
     					select: function(f, r, i) {
-    						var store = Ext.create('casco.store.Tcs');
-    						store.load({
+    						var st = Ext.create('casco.store.Versions');
+    						st.load({
     							params: {
     								document_id: r.get('id')
     							},
     							callback: function(){
-    								me.down('grid').reconfigure(store);
+    								Ext.getCmp('test-tc-version').store = st;
     							}
     						});
 						}
@@ -71,8 +97,18 @@ Ext.define('casco.view.testing.Test', {
                 items:[{
     				fieldLabel: 'Tc Version',
     				name: 'tag',
+    				id: 'test-tc-version',
     				xtype: 'combobox',
-    				allowBlank: false
+    				allowBlank: false,
+    				editable: false,
+    				queryMode: 'local',
+    				displayField: 'name',
+    				valueField: 'id',
+    				listeners: {
+    					select: function(f, r, i){
+    						me.loadgrid();
+    					}
+    				}
     			}] 
 			}]
 		},{
@@ -89,7 +125,20 @@ Ext.define('casco.view.testing.Test', {
     				valueField: 'id',
     				store : rsdocs,
     				allowBlank: false,
-    				queryMode: 'local'
+    				queryMode: 'local',
+    				listeners: {
+    					select: function(f, r, i) {
+    						var st = Ext.create('casco.store.Versions');
+    						st.load({
+    							params: {
+    								document_id: r.get('id')
+    							},
+    							callback: function(){
+    								Ext.getCmp('test-rs-version').store = st;
+    							}
+    						});
+						}
+    				}
     			}] 
 			},{
 				columnWidth:0.25,   
@@ -97,8 +146,19 @@ Ext.define('casco.view.testing.Test', {
                 items:[{
     				fieldLabel: 'Rs Version',
     				name: 'tag',
+    				id: 'test-rs-version',
     				xtype: 'combobox',
-    				allowBlank: false
+    				allowBlank: false,
+    				allowBlank: false,
+    				editable: false,
+    				queryMode: 'local',
+    				displayField: 'name',
+    				valueField: 'id',
+    				listeners: {
+    					select: function(f, r, i){
+    						me.loadgrid();
+    					}
+    				}
     			}] 
 			}]
 		}, {
@@ -141,17 +201,17 @@ Ext.define('casco.view.testing.Test', {
 					text: "result",
 					dataIndex: "result",
 					width: 230,
-					renderer: function(value, a, record) {console.log(arguments)
+					renderer: function(value, a, record) {
 						var str;
 						switch (value) {
 						case 0:
-							str = '<form><input onclick="untested(\''+record.get('id')+'\')" type="radio" name="result" checked="checked">untested <input onclick="passed(\''+record.get('id')+'\')" type="radio" name="result">passed <input onclick="failed(\''+record.get('id')+'\')" type="radio" name="result">failed</form>';
+							str = '<form><input onclick="setresult(\''+record.get('id')+'\',0)" type="radio" name="result" checked="checked">untested <input onclick="setresult(\''+record.get('id')+'\',1)" type="radio" name="result">passed <input onclick="setresult(\''+record.get('id')+'\',2)" type="radio" name="result">failed</form>';
 							break;
 						case 1:
-							str = '<form><input onclick="untested(\''+record.get('id')+'\')" type="radio" name="result">untested <input onclick="passed(\''+record.get('id')+'\')" type="radio" name="result" checked="checked">passed <input onclick="failed(\''+record.get('id')+'\')" type="radio" name="result">failed</form>';
+							str = '<form><input onclick="setresult(\''+record.get('id')+'\',0)" type="radio" name="result">untested <input onclick="setresult(\''+record.get('id')+'\',1)" type="radio" name="result" checked="checked">passed <input onclick="setresult(\''+record.get('id')+'\',2)" type="radio" name="result">failed</form>';
 							break;
 						case 2:
-							str = '<form><input onclick="untested(\''+record.get('id')+'\')" type="radio" name="result">untested <input onclick="passed(\''+record.get('id')+'\')" type="radio" name="result">passed <input onclick="failed(\''+record.get('id')+'\')" type="radio" name="result" checked="checked">failed</form>';
+							str = '<form><input onclick="setresult(\''+record.get('id')+'\',0)" type="radio" name="result">untested <input onclick="setresult(\''+record.get('id')+'\',1)" type="radio" name="result">passed <input onclick="setresult(\''+record.get('id')+'\',2)" type="radio" name="result" checked="checked">failed</form>';
 						}
 						return str;
 					}
@@ -162,34 +222,17 @@ Ext.define('casco.view.testing.Test', {
 		me.callParent(arguments);
 	}
 })
-function untested(id){
+function setresult(id, result){
+	var tc_v_id = Ext.getCmp('test-tc-version').getValue();
+	var rs_v_id = Ext.getCmp('test-rs-version').getValue();
+	var build_v_id = Ext.getCmp('test-build-version').getValue();
 	Ext.Ajax.request({
 	    url: API+'setresult',
 	    params: {
-	        id: id,
-	        result: 0
-	    },
-	    success: function(response){
-	    }
-	});
-}
-function passed(id){
-	Ext.Ajax.request({
-	    url: API+'setresult',
-	    params: {
-	        id: id,
-	        result: 1
-	    },
-	    success: function(response){
-	    }
-	});
-}
-function failed(id){
-	Ext.Ajax.request({
-	    url: API+'setresult',
-	    params: {
-	        id: id,
-	        result: 2
+	        tc_id: id,
+	        result: result,
+	        rs_version_id: rs_v_id,
+	        build_id: build_v_id
 	    },
 	    success: function(response){
 	    }

@@ -13,8 +13,11 @@ Ext.define('casco.view.tc.Tc', {
     		params: {document_id: me.document_id}
     	});
     	me.store = st;
-    	
+		var latest_v = me.document.get('versions').length==0?'':me.document.get('versions')[0].name;
         me.tbar = [{
+			xtype: 'label',
+			text: 'version: '+latest_v
+		},{
             text: 'Add Item',
             glyph: 0xf067, 
             handler : function() {
@@ -76,39 +79,22 @@ Ext.define('casco.view.tc.Tc', {
 			},
 			hidden: true
 		}];
-    	me.callParent(arguments);
-    },
-    features: [{
-    	ftype: 'summary',
-    	dock: 'top'
-    }],
-    columns: [
-//        {
-//            xtype: 'checkcolumn',
-//            header: '*',
-//            dataIndex: 'active',
-//            width: 30,
-//            editor: {
-//                xtype: 'checkbox',
-//                cls: 'x-grid-checkheader-editor'
-//            }
-//        },
-        //{text: "#", dataIndex: "id", width: 50, hideable: false},
-        {text: "tag", dataIndex: "tag", width: 200, hideable: false,
-            summaryType: 'count',
-            summaryRenderer: function(value, summaryData, dataIndex) {
-                return Ext.String.format('{0} item{1}', value, value !== 1 ? 's' : '');
-            }},
-        {text: "sources", dataIndex: "sources", width: 200, autoShow: false, renderer : function(value) {
+        me.columns = [
+		{text: "tag", dataIndex: "tag", width: 200, hideable: false,
+		  summaryType: 'count',
+		  summaryRenderer: function(value, summaryData, dataIndex) {
+		      return Ext.String.format('{0} item{1}', value, value !== 1 ? 's' : '');
+		  }},
+		{text: "sources", dataIndex: "sources", width: 200, autoShow: false, renderer : function(value) {
 			var arr = [];
 			Ext.Array.each(value, function(v) {
-		        arr.push(v.tag);
-		    });
+		      arr.push(v.tag);
+		  });
 			return arr.join(', ');
 		}},
-        {text: "test method", dataIndex: "testmethod", width: 100, renderer: function(tm){return tm?tm.name:''}},
-        {text: "pre condition", dataIndex: "pre_condition", flex: 1},
-        {text: "result", dataIndex: "result", width: 100, renderer : function(value) {
+		{text: "test method", dataIndex: "testmethod", width: 100, renderer: function(tm){return tm?tm.name:''}},
+		{text: "pre condition", dataIndex: "pre_condition", flex: 1},
+		/*{text: "result", dataIndex: "result", width: 100, renderer : function(value) {
 			switch(value){
 			case 0:
 				return 'untested';
@@ -117,8 +103,14 @@ Ext.define('casco.view.tc.Tc', {
 			case 2:
 				return '<span style="color:red">failed</span>';
 			}
-		}}
-    ],
+		}}*/
+		];
+    	me.callParent(arguments);
+    },
+    features: [{
+    	ftype: 'summary',
+    	dock: 'top'
+    }],
     listeners : {
         celldblclick: function(a,b,c, record, item, index, e) {
         	if(c==0){

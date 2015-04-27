@@ -2,9 +2,6 @@ Ext.define('casco.view.main.Top', {
     extend: 'Ext.toolbar.Toolbar',
     alias: 'widget.top',
     requires: ['casco.view.testing.Test'],
-//    defaults : {
-//        xtype : 'buttontransparent'
-//    },
     
     style: {background: '#3892d3',padding: '10px',color: '#fff'},
     initComponent: function(){
@@ -59,12 +56,21 @@ Ext.define('casco.view.main.Top', {
             //value: localStorage.project_id,
             listeners: {
             	select: function(combo, record){
-            		//if(record.id != localStorage.project_id){
-            			localStorage.project_id = record.id;
-            			localStorage.project_name = record.data.name;
-            			localStorage.view = 'test';
-            			location.reload();
-            		//}
+            		localStorage.project = JSON.stringify(record.getData());
+            		localStorage.project_id = record.get('id');
+            		localStorage.project_name = record.get('name');
+            		var tree = Ext.getCmp('mtree');
+            		tree.setTitle(record.get('name'));
+//            		tree.store = Ext.create('casco.store.TreeDocuments', {
+//                		proxy: {
+//                			extraParams: {
+//                				project_id: record.get('id')
+//                			}
+//                		}
+//                	});
+            		tree.store.reload({params: {project_id: record.get('id')}});
+            		localStorage.view = 'test';
+            		//location.reload();
             	}
             }
         },{
