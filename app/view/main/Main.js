@@ -49,6 +49,7 @@ Ext.define('casco.view.main.Main', {
 	        region: 'center',
 	        xtype: 'tabpanel',
 	        reference: 'main',
+	        id: 'main',
 	        items:[{
 	            title: 'Main',
 	            html: '<iframe id="draw" src="/draw/noedit.html?'+localStorage.project_id+'" style="width:100%;height:100%;border:0"></iframe>'

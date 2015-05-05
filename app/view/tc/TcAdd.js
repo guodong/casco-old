@@ -35,6 +35,10 @@ Ext.define('casco.view.tc.TcAdd', {
 				name : 'id',
 				xtype : 'hiddenfield',
 			},{
+				name: 'version_id',
+				xtype: 'hiddenfield',
+				value: me.version_id
+			},{
 				anchor : '100%',
 				fieldLabel : 'Tag',
 				name : 'tag',

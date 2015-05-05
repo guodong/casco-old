@@ -17,11 +17,9 @@ Ext.define('casco.view.rs.RsImport', {
             bodyPadding: 10,
         	items: [{
 				fieldLabel: 'Version',
-				msgTarget: 'side',
-				name: 'version',
-    	        labelWidth: 50,
-    	        width: '100%',
-				xtype: 'textfield'
+				name: 'version_id',
+				xtype: 'hiddenfield',
+				value: me.version_id
 			},{
     	        xtype: 'filefield',
     	        name: 'file',
@@ -32,11 +30,6 @@ Ext.define('casco.view.rs.RsImport', {
     	        anchor: 0,
     	        width: '100%',
     	        buttonText: 'Select File'
-    	    },{
-    	        xtype: 'hiddenfield',
-    	        name: 'document_id',
-    	        value: me.document_id,
-    	        allowBlank: false,
     	    },{
     	        xtype: 'hiddenfield',
     	        name: 'type',

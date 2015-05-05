@@ -2,29 +2,68 @@ var cvd = 0;
 Ext.define('casco.view.rs.Rs', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.rs',
-	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail','casco.store.Versions'],
+	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail','casco.store.Versions','casco.view.document.version.Create'],
 	autoHeight: true,
 	allowDeselect: false,
 	viewModel: 'main',
 	initComponent: function() {
 		var me = this;
-		var st = new casco.store.Rss();
-		st.load({
-			params: {
-				document_id: me.document_id
+		me.versions = new casco.store.Versions();
+		me.store = new casco.store.Rss();
+		me.versions.load({
+			params:{
+				document_id: me.document.id
 			},
-			synchronous: true
-		});
-		me.store = st;
-		st.each(function(rs){
-			if(rs.tcs.length){
-				cvd++;
+			synchronous: true,
+			callback: function(){
+				me.down('combobox').select(me.versions.getAt(0));
+				var latest_v = me.versions.getCount() > 0?me.versions.getAt(0):0;
+				me.curr_version = latest_v;
+				if(latest_v){
+					me.store.load({
+						params: {
+							version_id: latest_v.get('id')
+						}
+					});
+					me.store.each(function(rs){
+						if(rs.tcs.length){
+							cvd++;
+						}
+					});
+				}
+				
 			}
 		});
-		var latest_v = me.document.get('versions').length==0?'':me.document.get('versions')[0].name;
 		me.tbar = [{
-			xtype: 'label',
-			text: 'version: '+latest_v
+			xtype: 'combobox',
+			id: 'docv-'+me.document.id,
+			fieldLabel: 'version',
+			labelWidth: 50,
+			store: me.versions,
+			displayField: 'name',
+            valueField: 'id',
+            queryMode: 'local',
+            editable: false,
+            listeners: {
+            	select: function(combo, record){
+            		me.curr_version = record;
+            		me.store.load({
+            			params:{
+                			version_id: record.get('id')
+            			}
+            		})
+            	}
+            }
+		},{
+			text: 'Create Version',
+			glyph: 0xf067,
+			scope: this,
+			handler: function() {
+				var win = Ext.create('widget.version.create', {
+					document: me.document,
+				});
+				win.show();
+			}
 		},{
 			text: 'Import Document',
 			glyph: 0xf093,
@@ -34,7 +73,7 @@ Ext.define('casco.view.rs.Rs', {
 					listeners: {
 						scope: this
 					},
-					document_id: me.document_id,
+					version_id: me.down('combobox').getValue(),
 					type: 'rs'
 				});
 				win.show();
@@ -44,7 +83,7 @@ Ext.define('casco.view.rs.Rs', {
 			glyph: 0xf108,
 			scope: this,
 			handler: function() {
-				window.open("/viewdoc.html?file="+me.document_id,"_blank","width=800,height=900");
+				window.open("/viewdoc.html?file="+me.curr_version.get('filename'),"_blank","width=800,height=900");
 			}
 		},{
 			text: 'View Graph',
@@ -98,6 +137,10 @@ Ext.define('casco.view.rs.Rs', {
 	            return Ext.String.format('{0} item{1}', value, value !== 1 ? 's' : '');
 	        }
 		}, {
+			text: "allocation",
+			dataIndex: "allocation",
+			flex: 1
+		}, {
 			text: "implement",
 			dataIndex: "implement",
 			width: 100,
@@ -108,10 +151,6 @@ Ext.define('casco.view.rs.Rs', {
 			text: "category",
 			dataIndex: "category",
 			width: 130
-		}, {
-			text: "allocation",
-			dataIndex: "allocation",
-			flex: 1
 		}, {
 			text: "tcs",
 			dataIndex: "tcs",

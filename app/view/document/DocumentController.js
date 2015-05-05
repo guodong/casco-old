@@ -32,6 +32,23 @@ Ext.define('casco.view.document.DocumentController', {
 		});
 		
 	},
+	createVersion : function() {
+		var form = this.lookupReference('version_create_form');
+		var document = form.document;
+		var version = new casco.model.Version(form.getValues());
+		if (version.get('id')) {
+			version.set('id', 0);
+		}
+		
+		version.save({
+			callback: function(){
+				var combo = Ext.getCmp('docv-'+document.get('id'));
+				combo.store.reload();
+				form.up('window').destroy();
+			}
+		});
+		
+	},
 	createFolder : function() {
 		var form = this.lookupReference('documentfolder_create_form');
 		var pjt = new casco.model.Document(form.getValues());

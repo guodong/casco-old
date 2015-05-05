@@ -8,20 +8,60 @@ Ext.define('casco.view.tc.Tc', {
     viewModel : 'main',
     initComponent: function(){
     	var me = this;
-    	var st = new casco.store.Tcs;
-    	st.load({
-    		params: {document_id: me.document_id}
-    	});
-    	me.store = st;
-		var latest_v = me.document.get('versions').length==0?'':me.document.get('versions')[0].name;
+    	me.versions = new casco.store.Versions();
+		me.store = new casco.store.Tcs();
+		me.versions.load({
+			params:{
+				document_id: me.document.id
+			},
+			callback: function(){
+				me.down('combobox').select(me.versions.getAt(0));
+				var latest_v = me.versions.getCount() > 0?me.versions.getAt(0):0;
+				me.curr_version = latest_v;
+				if(latest_v){
+					me.store.load({
+						params: {
+							version_id: latest_v.get('id')
+						}
+					});
+				}
+			}
+		});
         me.tbar = [{
-			xtype: 'label',
-			text: 'version: '+latest_v
+			xtype: 'combobox',
+			id: 'docv-'+me.document.id,
+			fieldLabel: 'version',
+			labelWidth: 50,
+			store: me.versions,
+			displayField: 'name',
+            valueField: 'id',
+            queryMode: 'local',
+            editable: false,
+            listeners: {
+            	select: function(combo, record){
+            		me.curr_version = record;
+            		me.store.load({
+            			params:{
+                			version_id: record.get('id')
+            			}
+            		})
+            	}
+            }
 		},{
+			text: 'Create Version',
+			glyph: 0xf067,
+			scope: this,
+			handler: function() {
+				var win = Ext.create('widget.version.create', {
+					document: me.document,
+				});
+				win.show();
+			}
+		}, {
             text: 'Add Item',
             glyph: 0xf067, 
             handler : function() {
-                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, document_id: me.document_id});
+                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, version_id: me.curr_version.get('id')});
                 win.show();
             }
         },{
@@ -39,7 +79,7 @@ Ext.define('casco.view.tc.Tc', {
 					listeners: {
 						scope: this
 					},
-					document_id: me.document_id,
+					version_id: me.down('combobox').getValue(),
 					type: 'tc',
 				});
 				win.show();
@@ -68,7 +108,7 @@ Ext.define('casco.view.tc.Tc', {
 			glyph: 0xf108,
 			scope: this,
 			handler: function() {
-				window.open("/viewdoc.html?file="+me.document_id,"_blank","width=800,height=900");
+				window.open("/viewdoc.html?file="+me.version.get('filename'),"_blank","width=800,height=900");
 			}
 		},{
 			text: 'View Graph',
@@ -94,16 +134,6 @@ Ext.define('casco.view.tc.Tc', {
 		}},
 		{text: "test method", dataIndex: "testmethod", width: 100, renderer: function(tm){return tm?tm.name:''}},
 		{text: "pre condition", dataIndex: "pre_condition", flex: 1},
-		/*{text: "result", dataIndex: "result", width: 100, renderer : function(value) {
-			switch(value){
-			case 0:
-				return 'untested';
-			case 1:
-				return '<span style="color:green">passed</span>';
-			case 2:
-				return '<span style="color:red">failed</span>';
-			}
-		}}*/
 		];
     	me.callParent(arguments);
     },
