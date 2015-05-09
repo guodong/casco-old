@@ -203,6 +203,7 @@ Ext.define('casco.view.testing.Test', {
 					width: 230,
 					renderer: function(value, a, record) {
 						var str;
+						value *= 1; //转换为数字，在某版本pdo有bug
 						switch (value) {
 						case 0:
 							str = '<form><input onclick="setresult(\''+record.get('id')+'\',0)" type="radio" name="result" checked="checked">untested <input onclick="setresult(\''+record.get('id')+'\',1)" type="radio" name="result">passed <input onclick="setresult(\''+record.get('id')+'\',2)" type="radio" name="result">failed</form>';

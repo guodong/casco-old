@@ -59,6 +59,9 @@ Ext.define('casco.view.main.Top', {
             		localStorage.project = JSON.stringify(record.getData());
             		localStorage.project_id = record.get('id');
             		localStorage.project_name = record.get('name');
+            		localStorage.view = 'test';
+            		location.reload();
+            		return;
             		var tree = Ext.getCmp('mtree');
             		tree.setTitle(record.get('name'));
 //            		tree.store = Ext.create('casco.store.TreeDocuments', {
