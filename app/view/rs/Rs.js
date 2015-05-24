@@ -74,6 +74,7 @@ Ext.define('casco.view.rs.Rs', {
 						scope: this
 					},
 					version_id: me.down('combobox').getValue(),
+					document_id: me.document.id,
 					type: 'rs'
 				});
 				win.show();

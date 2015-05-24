@@ -57,20 +57,7 @@ Ext.define('casco.view.tc.Tc', {
 				});
 				win.show();
 			}
-		}, {
-            text: 'Add Item',
-            glyph: 0xf067, 
-            handler : function() {
-                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, version_id: me.curr_version.get('id')});
-                win.show();
-            }
-        },{
-            text: 'Delete Item',
-            glyph: 0xf068,
-            handler : function() {
-
-            }
-        },{
+		},{
 			text: 'Import Document',
 			glyph: 0xf093,
 			scope: this,
@@ -80,6 +67,7 @@ Ext.define('casco.view.tc.Tc', {
 						scope: this
 					},
 					version_id: me.down('combobox').getValue(),
+					document_id: me.document.id,
 					type: 'tc',
 				});
 				win.show();
@@ -102,6 +90,19 @@ Ext.define('casco.view.tc.Tc', {
         						+ response.status);
         			}
         		});
+            }
+        }, {
+            text: 'Add Item',
+            glyph: 0xf067, 
+            handler : function() {
+                var win = Ext.create('widget.tcadd',{listeners:{scope: this}, version_id: me.curr_version.get('id')});
+                win.show();
+            }
+        },{
+            text: 'Delete Item',
+            glyph: 0xf068,
+            handler : function() {
+
             }
         },{
 			text: 'View Document',
