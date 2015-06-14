@@ -206,6 +206,8 @@ Ext.define('casco.view.rs.Rs', {
     viewConfig: { 
         stripeRows: false, 
         getRowClass: function(record) {
+        	if(record.get('tcs') == undefined)
+        		return 'red';
         	if(record.get('tcs').length != 0)
         		return ''; 
         	if(record.get('tcs').length == 0 && !record.get('vat').length && !record.get('vatstr'))
