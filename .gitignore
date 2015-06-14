@@ -7,3 +7,6 @@ Thumbs.db
 .settings
 build
 *.zip
+bootstrap.css
+bootstrap.js
+bootstrap.json
