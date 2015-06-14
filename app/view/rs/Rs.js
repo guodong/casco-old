@@ -77,8 +77,11 @@ Ext.define('casco.view.rs.Rs', {
 					document_id: me.document.id,
 					type: 'rs'
 				});
-				win.show();
-			}
+				if (!me.down('combobox').getValue() == '') 
+					win.show();
+				else 
+					alert("未创建版本号，导入文档前请先创建版本号");
+				}
 		},{
 			text: 'View Document',
 			glyph: 0xf108,
