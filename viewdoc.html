@@ -27,7 +27,7 @@
 			success: function(d){
 				var box = document.getElementById('box');
 				d.filename = d.filename.substring(0, d.filename.length-4);
-				var src = 'http://192.100.212.33/files/'+d.filename+'.pdf';
+				var src = 'http://192.100.212.33/files/'+d.filename+'.pdf';  //pdf文件路径
 				var str = '<embed name="plugin" type="application/pdf" width="100%" height="100%" src="'+src+'"></embed>';
 				box.innerHTML = str;
 			}

@@ -8,6 +8,7 @@ Ext.define('casco.view.manage.Testmethod', {
 		store.load();
 		me.store = store;
 		me.tbar = [{
+			hidden: localStorage.role == 'staff' ? true: false,  //用户权限
 			text: 'Add Method',
 			glyph: 0xf067,
 			handler: function() {
@@ -28,6 +29,7 @@ Ext.define('casco.view.manage.Testmethod', {
 	}],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
+        	if(localStorage.role == 'staff') return;  //用户权限
         	var win = Ext.create('casco.view.manage.Methodadd', {method: record});
             win.down('form').loadRecord(record);
             win.show();

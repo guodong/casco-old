@@ -16,7 +16,7 @@ Ext.define('casco.view.rs.Rs', {
 			},
 			synchronous: true,
 			callback: function(){
-				me.down('combobox').select(me.versions.getAt(0));
+				me.down('combobox').select(me.versions.getAt(0));     //取最近的版本
 				var latest_v = me.versions.getCount() > 0?me.versions.getAt(0):0;
 				me.curr_version = latest_v;
 				if(latest_v){
@@ -25,7 +25,7 @@ Ext.define('casco.view.rs.Rs', {
 							version_id: latest_v.get('id')
 						}
 					});
-					me.store.each(function(rs){
+					me.store.each(function(rs){     //没懂？？？？？
 						if(rs.tcs.length){
 							cvd++;
 						}
@@ -156,6 +156,7 @@ Ext.define('casco.view.rs.Rs', {
 			text: "tcs",
 			dataIndex: "tcs",
 			width: 250,
+			hidden: true,
 			renderer: function(value) {
 				var str = "";
 				Ext.Array.each(value, function(v) {

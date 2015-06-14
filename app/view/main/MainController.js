@@ -21,6 +21,7 @@ Ext.define('casco.view.main.MainController', {
         Ext.Msg.confirm('Confirm', 'Are you sure to logout?', function (choice) {
             if (choice === 'yes') {
                 localStorage.removeItem('uid');
+                localStorage.removeItem('project_id');
 
                 this.getView().destroy();
 

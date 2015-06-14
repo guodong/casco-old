@@ -11,7 +11,7 @@ Ext.define('casco.view.manage.Useradd', {
 	width: 300,
 	initComponent: function() {
 		var me = this;
-		me.projects = Ext.create('casco.store.Projects');
+		me.projects = Ext.create('casco.store.Projects');  //作用？？？？？
 		if(me.user){
 			me.projects.setData(me.user.get('projects'));
 		}
@@ -41,6 +41,13 @@ Ext.define('casco.view.manage.Useradd', {
 					anchor: '100%',
 					fieldLabel: 'Jobnumber',
 					name: 'jobnumber',
+					labelAlign: 'top',
+					msgTarget: 'under',
+					xtype: 'textfield'
+				},{                                        //用户角色
+					anchor: '100%',
+					fieldLabel: 'role',
+					name: 'role',
 					labelAlign: 'top',
 					msgTarget: 'under',
 					xtype: 'textfield'

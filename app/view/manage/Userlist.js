@@ -10,6 +10,7 @@ Ext.define('casco.view.manage.Userlist', {
 		store.load();
 		me.store = store;
 		me.tbar = [{
+			hidden: localStorage.role == 'staff' ? true: false,  //用户权限
 			text: 'Add User',
 			glyph: 0xf067,
 			handler: function() {
@@ -17,13 +18,14 @@ Ext.define('casco.view.manage.Userlist', {
 				win.show();
 			}
 		}, {
+			hidden: localStorage.role == 'staff' ? true: false,  //用户权限
 			text: 'Delete User',
 			glyph: 0xf068,
 			handler: function() {
 
 			}
 		}];
-		me.callParent();
+		me.callParent();  //???作用
 	},
 	columns: [{
 		text: "account",
@@ -38,12 +40,17 @@ Ext.define('casco.view.manage.Userlist', {
 		dataIndex: "jobnumber",
 		width: 130
 	}, {
+		text: "role",
+		dataIndex: "role",
+		width: 180
+	}, {
 		text: "created time",
 		dataIndex: "created_at",
 		width: 180
 	}	],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
+        	if(localStorage.role == 'staff') return;  //用户权限
         	var win = Ext.create('casco.view.manage.Useradd', {user: record});
             win.down('form').loadRecord(record);
             win.show();

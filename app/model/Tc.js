@@ -1,6 +1,6 @@
 Ext.define('casco.model.Tc', {
 	extend : 'Ext.data.Model',
-	fields : ['id', 'tag'],
+	fields : ['id', 'tag','source_json'],
 	proxy: {
         type: 'rest',
         url: API+'tc',

@@ -46,15 +46,15 @@ Ext.define('casco.view.rs.RsImport', {
     	                form.submit({
     	                    url: API+'docfile',
     	                    waitMsg: 'Uploading file...',
-    	                    success: function(fp, o) {
+    	                    success: function(fp, o) {   	                    	
     	                    	self.up('window').doHide();
-    	                    },
-    	                    failure: function(form, action) {
-    	                    	self.up('window').destroy();
 
     	                    	var t = Ext.ComponentQuery.query("#tab-"+me.document_id)[0];
     	          		      	t.store.reload();
-    	                    }
+    	                    },
+    	                  /*  failure: function(form, action) {
+    	                    	alert("文档解析错误");    //文档解析成功也报错？？？？？
+    	                    }*/
     	                });
     	            }
     	        }

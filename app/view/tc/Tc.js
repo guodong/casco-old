@@ -126,12 +126,14 @@ Ext.define('casco.view.tc.Tc', {
 		  summaryRenderer: function(value, summaryData, dataIndex) {
 		      return Ext.String.format('{0} item{1}', value, value !== 1 ? 's' : '');
 		  }},
-		{text: "sources", dataIndex: "sources", width: 200, autoShow: false, renderer : function(value) {
-			var arr = [];
+		{text: "source", dataIndex: "source_json", width: 200, autoShow: false, renderer : function(value) {
+			/*var arr = [];
 			Ext.Array.each(value, function(v) {
 		      arr.push(v.tag);
-		  });
-			return arr.join(', ');
+		  }   //之前数组的处理
+		  
+		  );
+			return arr.join(', ');*/
 		}},
 		{text: "test method", dataIndex: "testmethod", width: 100, renderer: function(tm){return tm?tm.name:''}},
 		{text: "pre condition", dataIndex: "pre_condition", flex: 1},
