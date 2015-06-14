@@ -8,6 +8,7 @@ Ext.define('casco.view.manage.Projectlist', {
 		store.load();
 		me.store = store;
 		me.tbar = [{
+			hidden: localStorage.role == 'staff' ? true: false,
 			text: 'Create Project',
 			glyph: 0xf067,
 			handler: function() {
@@ -41,11 +42,13 @@ Ext.define('casco.view.manage.Projectlist', {
 		dataIndex: "created_at",
 		width: 180
 	},{
+		hidden: localStorage.role == 'staff' ? true: false,  //用户权限
 		width: 150,
         renderer: function(val,meta,rec) {
             var id = Ext.id();
             Ext.defer(function() {
                Ext.widget('button', {
+            	   
                   renderTo: id,
                   text: 'Edit Documents',
                   glyph: 0xf040,
@@ -79,6 +82,7 @@ Ext.define('casco.view.manage.Projectlist', {
       }],
     listeners : {
         itemdblclick: function(dv, record, item, index, e) {
+        	if(localStorage.role == 'staff') return;  //用户权限
         	var win = Ext.create('casco.view.manage.Projectadd', {project: record});
             win.down('form').loadRecord(record);
             win.show();

@@ -16,7 +16,7 @@ Ext.define('casco.view.auth.LoginController', {
     			}else{console.log(record)
     		        localStorage.setItem("uid", record.get('id'));
     		        localStorage.setItem("user", JSON.stringify(record.data));
-
+    		        localStorage.setItem("role",record.get('role'));
     		        me.getView().destroy();
 
     		        Ext.widget('app-main');

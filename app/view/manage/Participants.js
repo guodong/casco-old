@@ -24,7 +24,7 @@ Ext.define('casco.view.manage.Participants', {
 			xtype: 'grid',
 			region: 'west',
 			store: users,
-			width: 400,
+			width: 300,
 	        split: true,
 	        collapsible: true,
 			autoScroll: true,
@@ -32,7 +32,7 @@ Ext.define('casco.view.manage.Participants', {
 		    columns: [
 				        { text: 'account',  dataIndex: 'account'},
 				        { text: 'realname',  dataIndex: 'realname', flex: 1},
-				        { text: 'jobnumber',  dataIndex: 'jobnumber'}
+				        //{ text: 'jobnumber',  dataIndex: 'jobnumber'}
 		    ],
 		    listeners : {
 		        itemdblclick: function(view, record, item, index, e, eOpts){
@@ -42,17 +42,17 @@ Ext.define('casco.view.manage.Participants', {
 		}, {
 			xtype: 'grid',
 			region: 'center',
-			itemId: 'sources',
+			//itemId: 'sources',
 			title: 'Selected Users',
 			id: 'selectedusers',
 			plugins: [Ext.create('Ext.grid.plugin.CellEditing', {clicksToEdit: 1})],
 		    columns: [
 				        { text: 'realname',  dataIndex: 'realname', flex: 1},
-				        {
+				       {
 				            //xtype: 'gridcolumn',
 				            renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
 				                console.log(value)
-				            },
+				            },  
 				            text: 'Role',
 				            dataIndex: 'role',
 				            editor: {
@@ -62,11 +62,11 @@ Ext.define('casco.view.manage.Participants', {
 				                store: Ext.create('Ext.data.Store', {
 									fields : [ 'text', 'value' ],
 									data : [ {
-										"text" : "EP",
-										"value" : "EP"
+										"text" : "leader",
+										"value" : "leader"
 									}, {
-										"text" : "EG",
-										"value" : "EG"
+										"text" : "member",
+										"value" : "member"
 									} ]
 								}),
 								listeners: {

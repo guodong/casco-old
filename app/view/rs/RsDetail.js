@@ -117,6 +117,7 @@ Ext.define('casco.view.rs.RsDetail', {
     	            displayField: 'name',
     	            valueField: 'id',
     	            id: 'vatstr_id',
+    	            hidden:true,
         	    	width: '100%',
     	            name: 'vatstr_id',
     	            store: me.vatstrstore,

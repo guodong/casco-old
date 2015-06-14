@@ -5,6 +5,7 @@ Ext.define('casco.view.manage.Projectadd', {
     requires: [
                'casco.view.manage.Vatstr',
                'casco.view.manage.Participants'
+      
     ],
     resizable: true,
     maximizable: true,
