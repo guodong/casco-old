@@ -6,6 +6,8 @@ Ext.define('casco.view.tc.TcStep', {
         'Ext.grid.plugin.CellEditing',
         'Ext.form.field.TextArea',
         'Ext.form.field.Number',
+        'Ext.form.Panel',
+        'Ext.ux.form.MultiSelect',
         'Ext.toolbar.TextItem',
         'casco.store.TcSteps'
     ],

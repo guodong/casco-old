@@ -58,11 +58,12 @@ Ext.define('casco.view.tc.TcAdd', {
 				anchor : '100%',
 				editable : false,
 				fieldLabel : 'Test Methods',
+				multiSelect:true,
 				//labelAlign : 'top',
 				displayField : 'name',
 				valueField : 'id',
 				store : tm,
-	            allowBlank: false
+	        
 			},{
 				anchor : '100%',
 				fieldLabel : 'Pre condition',
@@ -123,6 +124,7 @@ Ext.define('casco.view.tc.TcAdd', {
 				reference : 'mgrid',
 				id: 'mgrid',
 				store: me.steps
+				// allowBlank: false
 			}],
 			buttons: ['->', {
 				text: 'Save',

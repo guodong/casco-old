@@ -10,19 +10,27 @@ Ext.define('casco.view.tc.TcController', {
 		data.document_id = view.document_id;
 		data.steps = [];
 		var i = 1;
-		view.steps.each(function(s){
+		var d = view.steps.getData().items;
+		console.log(d);
+		for(var j in d){
+			var s = d[j];
+			if(s.get('actions')=='' || s.get('expect_result')==''){
+				alert ("Step can not be null");
+				return;
+				}
 			data.steps.push({ 
 				num: i,
 				actions: s.data.actions,
 				expected_result: s.data.expected_result
 			});
 			i++;
-		});
+		};
 		data.sources = [];
 		view.sources.each(function(s){
 			data.sources.push(s.getData());
 		});
 		//var tc = Ext.create('casco.model.Tc');console.log(tc.get('tag'))
+		data.testmethod_id = data.testmethod_id.join(',');
 		tc.set(data);
 		tc.save({
 			callback: function() {

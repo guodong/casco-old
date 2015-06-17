@@ -159,7 +159,6 @@ Ext.define('casco.view.rs.Rs', {
 			text: "tcs",
 			dataIndex: "tcs",
 			width: 250,
-			hidden: true,
 			renderer: function(value) {
 				var str = "";
 				Ext.Array.each(value, function(v) {
