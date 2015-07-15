@@ -48,7 +48,7 @@ Ext.define('casco.view.testing.BuildCreate', {
     	});
     	me.callParent(arguments);
     },
-    doHide: function(){
+  /*  doHide: function(){
         this.hide();
-    },
+    },*/
 });

@@ -126,6 +126,7 @@ Ext.define('casco.view.rs.RsDetail', {
     	        }, {
     				xtype: 'grid',
     				fieldLabel: 'Vat',
+    				//hidden:true,
     				dockedItems: [{
     	    	        xtype: 'toolbar', 
     	    	        dock: 'bottom',

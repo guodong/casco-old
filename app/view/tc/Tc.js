@@ -147,7 +147,10 @@ Ext.define('casco.view.tc.Tc', {
 				window.open('/draw/graph2.html#'+record.get('tag'));
 				return;
 			}
+        	console.log(typeof(record.get('testmethod_id')));
+        	if(typeof(record.get('testmethod_id')) != 'object'){ 
         	record.set('testmethod_id',record.get('testmethod_id').split(','));
+        	}
         	var win = Ext.create('widget.tcadd',{tc: record, document_id: this.document_id});
             win.down('form').loadRecord(record);
             win.show();

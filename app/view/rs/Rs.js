@@ -2,10 +2,24 @@ var cvd = 0;
 Ext.define('casco.view.rs.Rs', {
 	extend: 'Ext.grid.Panel',
 	alias: 'widget.rs',
-	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail','casco.store.Versions','casco.view.document.version.Create'],
+	requires: ['casco.view.rs.RsImport', 'casco.store.Rss', 'casco.view.rs.RsDetail',
+	           'casco.store.Versions','casco.view.document.version.Create',
+	           'Ext.toolbar.TextItem','Ext.form.field.Checkbox',
+	           'Ext.form.field.Text','Ext.ux.statusbar.StatusBar'],
 	autoHeight: true,
 	allowDeselect: false,
 	viewModel: 'main',
+	
+	//search参数
+	searchValue:null,
+	indexes:[],
+	//currentIndex:null,
+	searchRegExp:null,
+	//caseSensitive:false,
+	regExpMode:false,
+	matchCls:'x-livesearch-match',
+	defaultStatusText:'Nothing Found',
+	
 	initComponent: function() {
 		var me = this;
 		me.versions = new casco.store.Versions();
@@ -25,7 +39,7 @@ Ext.define('casco.view.rs.Rs', {
 							version_id: latest_v.get('id')
 						}
 					});
-					me.store.each(function(rs){     //没懂？？？？？
+					me.store.each(function(rs){     
 						if(rs.tcs.length){
 							cvd++;
 						}
@@ -43,7 +57,8 @@ Ext.define('casco.view.rs.Rs', {
 			displayField: 'name',
             valueField: 'id',
             queryMode: 'local',
-            editable: false,
+            editable: true,
+            lastQuery: '',
             listeners: {
             	select: function(combo, record){
             		me.curr_version = record;
@@ -52,16 +67,23 @@ Ext.define('casco.view.rs.Rs', {
                 			version_id: record.get('id')
             			}
             		})
-            	}
-            }
+            	},
+            	beforequery : function(e){
+            		e.query = new RegExp(e.query.trim(), 'i');
+            		e.forceAll = true;
+        	   	}
+        	   	
+            }  
 		},{
 			text: 'Create Version',
 			glyph: 0xf067,
 			scope: this,
+			//hidden:true,
 			handler: function() {
 				var win = Ext.create('widget.version.create', {
 					document: me.document,
 				});
+				
 				win.show();
 			}
 		},{
@@ -73,15 +95,13 @@ Ext.define('casco.view.rs.Rs', {
 					listeners: {
 						scope: this
 					},
-					version_id: me.down('combobox').getValue(),
+					//version_id: me.down('combobox').getValue(),
 					document_id: me.document.id,
+					vstore:me.versions,
 					type: 'rs'
 				});
-				if (!me.down('combobox').getValue() == '') 
-					win.show();
-				else 
-					alert("未创建版本号，导入文档前请先创建版本号");
-				}
+				win.show();
+				}   
 		},{
 			text: 'View Document',
 			glyph: 0xf108,
@@ -104,7 +124,25 @@ Ext.define('casco.view.rs.Rs', {
 			handler: function() {
 				window.open('/stat/cover.htm#'+me.document_id);
 			}
-		}];
+		},'Search',{
+            xtype: 'textfield',
+            name: 'searchField',
+            hideLabel: true,
+            width: 200,
+            listeners: {
+                change: {
+                    fn: me.onTextFieldChange,
+                    scope: this,
+                    buffer: 500
+                }
+            }
+       }];
+		
+		me.bbar = Ext.create('Ext.ux.StatusBar',{
+			defaultText:me.defaultStatusText,
+			name:'searchStatusBar'
+		});
+		
 		me.listeners = {
 			celldblclick: function(a,b,c,record){
 				if(c==0){
@@ -202,6 +240,108 @@ Ext.define('casco.view.rs.Rs', {
 		}*/];
 		me.callParent(arguments);
 	},
+	
+	afterRender:function(){
+		var me = this;
+		me.callParent(arguments);
+		me.textField= me.down('textfield[name = searchField]');
+		me.statusBar = me.down('statusbar[name = searchStatusBar]');
+	},
+	tagsRe:/<[^>]*>/gm,  //detects html tag
+	tagsProtect:'\x0f',  //DEL ASCII code
+	getSearchValue:function(){
+		var me = this,
+		value = me.textField.getValue();
+		if(value === ''){
+			return null;
+		}
+		if(!me.regExpMode){
+			value = Ext.String.escapeRegex(value);
+		}else{
+			try{
+				new RegExp(value);
+			}catch(error){
+				me.statusBar.setStatus({
+					text:error.message,
+					iconCls:'x-status-error'
+				});
+				return null;
+			}
+			if(value === '^' || value === '$'){
+				return null;
+			}
+		}
+		return value;
+	},
+	onTextFieldChange: function() {
+        var me = this,
+            count = 0,
+            view = me.view,
+            cellSelector = view.cellSelector,
+            innerSelector = view.innerSelector;
+
+        view.refresh();
+        // reset the statusbar
+        me.statusBar.setStatus({
+            text: me.defaultStatusText,
+            iconCls: ''
+        });
+
+        me.searchValue = me.getSearchValue();
+        me.indexes = [];
+        me.currentIndex = null;
+
+        if (me.searchValue !== null) {
+            me.searchRegExp = new RegExp(me.getSearchValue(), 'g' + (me.caseSensitive ? '' : 'i'));
+            
+            
+            me.store.each(function(record, idx) {
+                var td = Ext.fly(view.getNode(idx)).down(cellSelector),
+                    cell, matches, cellHTML;
+                while (td) {
+                    cell = td.down(innerSelector);
+                    matches = cell.dom.innerHTML.match(me.tagsRe);
+                    cellHTML = cell.dom.innerHTML.replace(me.tagsRe, me.tagsProtect);
+                    
+                    // populate indexes array, set currentIndex, and replace wrap matched string in a span
+                    cellHTML = cellHTML.replace(me.searchRegExp, function(m) {
+                       count += 1;
+                       if (Ext.Array.indexOf(me.indexes, idx) === -1) {
+                           me.indexes.push(idx);
+                       }
+                       if (me.currentIndex === null) {
+                           me.currentIndex = idx;
+                       }
+                       return '<span class="' + me.matchCls + '">' + m + '</span>';
+                    });
+                    // restore protected tags
+                    Ext.each(matches, function(match) {
+                       cellHTML = cellHTML.replace(me.tagsProtect, match); 
+                    });
+                    // update cell html
+                    cell.dom.innerHTML = cellHTML;
+                    td = td.next();
+                }
+            }, me);
+         // results found
+            if (me.currentIndex !== null) {
+                me.getSelectionModel().select(me.currentIndex);
+                me.statusBar.setStatus({
+                    text: count + ' matche(s) found.',
+                    iconCls: 'x-status-valid'
+                });
+            }
+        }
+
+        // no results found
+        if (me.currentIndex === null) {
+            me.getSelectionModel().deselectAll();
+        }
+
+        me.textField.focus();
+    },
+
+	
     viewConfig: { 
         stripeRows: false, 
         getRowClass: function(record) {

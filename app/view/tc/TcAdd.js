@@ -18,7 +18,14 @@ Ext.define('casco.view.tc.TcAdd', {
 		me.sources = Ext.create('casco.store.Sources');
 		me.steps = Ext.create('casco.store.TcSteps');
 		if(me.tc){
-			me.sources.setData(me.tc.get('sources'));
+			var arr = [];
+			var data = [];
+			arr = JSON.parse(me.tc.get('source_json'));
+			for(var i in arr){
+				var d = {tag:arr[i]};
+				data.push(d);
+			}
+			me.sources.setData(data);
 			me.steps.setData(me.tc.get('steps'));
 		}
 		var tm = Ext.create('casco.store.Testmethods');

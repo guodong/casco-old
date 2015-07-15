@@ -77,6 +77,9 @@ Ext.define('casco.view.rs.vat.Add', {
 				text: 'Vat',
 				dataIndex: 'tag',
 				flex: 1
+			},{
+				text:'comment',
+				editable:true,
 			}],
 			store: me.vat,
 			listeners: {
