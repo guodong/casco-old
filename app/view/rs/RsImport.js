@@ -20,7 +20,7 @@ Ext.define('casco.view.rs.RsImport', {
 			bodyPadding : 10,
 			items : [ {
 				xtype : 'combobox',
-				fieldLabel : 'version',
+				fieldLabel : 'Version',
 				labelWidth : 50,
 				store : me.vstore,
 				displayField : 'name',
@@ -28,6 +28,7 @@ Ext.define('casco.view.rs.RsImport', {
 				queryMode : 'local',
 				editable : true,
 				width : '100%',
+				lastQuery: '',
 				listeners : {
 					beforequery : function(e) {
 						e.query = new RegExp(e.query.trim(), 'i');
@@ -36,15 +37,13 @@ Ext.define('casco.view.rs.RsImport', {
 					blur:function(e){
 						var input = e.getRawValue().trim();
 						e.setRawValue(input);
-						console.log(input === 'v1');
-						if(input== null) 
+						if(input == '') 
 							Ext.Msg.alert('Error','Vesrion is NULL ！');
 						else if(e.store.find('name',input) == -1){
-							console.log(input == '');
 							Ext.Msg.alert('Notice','New Version: '+ input);
 							me.aflag = input;
 						}
-							else Ext.Msg.alert('Notice','Exist Version: '+ input);
+							//else Ext.Msg.alert('Notice','Exist Version: '+ input);
 					}
 				}
 			}, 
@@ -65,7 +64,7 @@ Ext.define('casco.view.rs.RsImport', {
 			}, {
 				xtype : 'hiddenfield',
 				name : 'type',
-				value : me.type,
+				value : me.type, 
 				allowBlank : false,
 			},{
 				xtype:'hiddenfield',
@@ -82,6 +81,7 @@ Ext.define('casco.view.rs.RsImport', {
 				handler : function() {
 					var self = this;
 					var form = this.up('form').getForm();
+					//Ext.Msg.alert('Test',);
 					if(me.aflag) form.findField('isNew').setValue = 1;
 					if (form.isValid()) {
 						form.submit({

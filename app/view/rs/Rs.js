@@ -17,7 +17,7 @@ Ext.define('casco.view.rs.Rs', {
 	searchRegExp:null,
 	//caseSensitive:false,
 	regExpMode:false,
-	matchCls:'x-livesearch-match',
+	//matchCls:'x-livesearch-match',
 	defaultStatusText:'Nothing Found',
 	
 	initComponent: function() {
@@ -51,11 +51,12 @@ Ext.define('casco.view.rs.Rs', {
 		me.tbar = [{
 			xtype: 'combobox',
 			id: 'docv-'+me.document.id,
-			fieldLabel: 'version',
+			fieldLabel: 'Version',
 			labelWidth: 50,
 			store: me.versions,
 			displayField: 'name',
             valueField: 'id',
+            width:200,
             queryMode: 'local',
             editable: true,
             lastQuery: '',
@@ -74,20 +75,19 @@ Ext.define('casco.view.rs.Rs', {
         	   	}
         	   	
             }  
-		},{
+		},'-',{
 			text: 'Create Version',
 			glyph: 0xf067,
 			scope: this,
-			//hidden:true,
+			hidden:true,
 			handler: function() {
 				var win = Ext.create('widget.version.create', {
 					document: me.document,
 				});
-				
 				win.show();
 			}
-		},{
-			text: 'Import Document',
+		},'-',{
+			text: 'Import Doc',
 			glyph: 0xf093,
 			scope: this,
 			handler: function() {
@@ -102,14 +102,14 @@ Ext.define('casco.view.rs.Rs', {
 				});
 				win.show();
 				}   
-		},{
-			text: 'View Document',
+		},'-',{
+			text: 'View Doc',
 			glyph: 0xf108,
 			scope: this,
 			handler: function() {
 				window.open("/viewdoc.html?file="+me.curr_version.get('filename'),"_blank","width=800,height=900");
 			}
-		},{
+		},'-',{
 			text: 'View Graph',
 			glyph: 0xf0e8,
 			scope: this,
@@ -117,17 +117,19 @@ Ext.define('casco.view.rs.Rs', {
 				window.open('/draw/graph.html?document_id='+me.document_id);
 			},
 			hidden: true
-		},{
+		},'-',{
 			text: 'View Statistics',
 			glyph: 0xf080,
 			scope: this,
 			handler: function() {
 				window.open('/stat/cover.htm#'+me.document_id);
 			}
-		},'Search',{
+		},'->',{
             xtype: 'textfield',
-            name: 'searchField',
-            hideLabel: true,
+            fieldLabel: 'Search',  
+            labelWidth: 50,
+            name: 'searchField', 
+            //hideLabel: true,
             width: 200,
             listeners: {
                 change: {
@@ -223,21 +225,7 @@ Ext.define('casco.view.rs.Rs', {
 			renderer: function(value) {
 				return value?value.name:'';
 			}
-		}/*, {
-			text: "result",
-			dataIndex: "result",
-			width: 70,
-			renderer : function(value) {
-				switch(value){
-				case 0:
-					return 'untested';
-				case 1:
-					return '<span style="color:green">passed</span>';
-				case 2:
-					return '<span style="color:red">failed</span>';
-				}
-			}
-		}*/];
+		}];
 		me.callParent(arguments);
 	},
 	
@@ -247,11 +235,11 @@ Ext.define('casco.view.rs.Rs', {
 		me.textField= me.down('textfield[name = searchField]');
 		me.statusBar = me.down('statusbar[name = searchStatusBar]');
 	},
-	tagsRe:/<[^>]*>/gm,  //detects html tag
+	tagsRe:/<[^>]*>/gm,  //detects html tag gm 参数
 	tagsProtect:'\x0f',  //DEL ASCII code
 	getSearchValue:function(){
 		var me = this,
-		value = me.textField.getValue();
+		value = me.textField.getValue();  //?var
 		if(value === ''){
 			return null;
 		}
@@ -263,7 +251,7 @@ Ext.define('casco.view.rs.Rs', {
 			}catch(error){
 				me.statusBar.setStatus({
 					text:error.message,
-					iconCls:'x-status-error'
+					//iconCls:'x-status-error'
 				});
 				return null;
 			}
@@ -275,16 +263,16 @@ Ext.define('casco.view.rs.Rs', {
 	},
 	onTextFieldChange: function() {
         var me = this,
-            count = 0,
-            view = me.view,
-            cellSelector = view.cellSelector,
-            innerSelector = view.innerSelector;
+        count = 0,
+        view = me.view,
+        cellSelector = view.cellSelector,
+        innerSelector = view.innerSelector;
 
         view.refresh();
         // reset the statusbar
         me.statusBar.setStatus({
             text: me.defaultStatusText,
-            iconCls: ''
+           // iconCls: '',
         });
 
         me.searchValue = me.getSearchValue();
@@ -293,8 +281,6 @@ Ext.define('casco.view.rs.Rs', {
 
         if (me.searchValue !== null) {
             me.searchRegExp = new RegExp(me.getSearchValue(), 'g' + (me.caseSensitive ? '' : 'i'));
-            
-            
             me.store.each(function(record, idx) {
                 var td = Ext.fly(view.getNode(idx)).down(cellSelector),
                     cell, matches, cellHTML;

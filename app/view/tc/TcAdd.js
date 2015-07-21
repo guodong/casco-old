@@ -70,7 +70,6 @@ Ext.define('casco.view.tc.TcAdd', {
 				displayField : 'name',
 				valueField : 'id',
 				store : tm,
-	        
 			},{
 				anchor : '100%',
 				fieldLabel : 'Pre condition',
